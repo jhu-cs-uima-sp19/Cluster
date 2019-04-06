@@ -1,2 +1,0 @@
-# Cluster
-# Hello world
