@@ -108,11 +108,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="28" />
-    <option name="y" value="23" />
+    <option name="y" value="22" />
     <option name="width" value="1260" />
-    <option name="height" value="773" />
+    <option name="height" value="774" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -227,6 +227,7 @@
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="device.picker.selection" value="Pixel_XL_API_28" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/quickstart-android-master/quickstart-android-master/auth" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
