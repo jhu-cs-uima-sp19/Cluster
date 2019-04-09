@@ -3,4 +3,9 @@
     <string name="title_Manage">Manage</string>
     <string name="title_Interested">Interested</string>
     <string name="title_Find">Find</string>
+
+    <string name="hello_manage_fragment">Hello manage fragment</string>
+    <string name="hello_interested_fragment">Hello interested fragment</string>
+    <string name="hello_find_fragment">Hello find fragment</string>
+
 </resources>
