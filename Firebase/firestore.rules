@@ -1,0 +1,30 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Make sure the uid of the requesting user matches name of the user
+    // document. The wildcard expression {userId} makes the userId variable
+    // available in rules.
+    match /users/{userId} {
+      allow read, update, delete: if request.auth.uid == userId;
+      allow create: if request.auth.uid != null;
+    }
+  
+		//events----------------
+     match /events/country/{countryVal}/{eventVal} {
+      allow read, create: if request.auth.uid != null;
+      	//allow updating if uid is creator and creator does not change
+      allow update, delete: if request.auth.uid == request.resource.data.creator && request.resource.data.creator == resource.data.creator;
+    }
+    
+    //starred events----------------
+     match /events/country/{contryVal}/{eventVal}/public/star {
+      allow read, create, update: if request.auth.uid != null;
+      	//allow deleting if uid is creator
+      allow delete: if request.auth.uid == starGetCreator(countryVal, eventVal);
+    }
+  }
+  
+  //get owner of event parent directory
+  function starGetCreator (countryVal, eventVal) {
+  	return get(/databases/$(database)/documents/events/country/countryVal/eventVal/.data.creator)
+  }
+}
