@@ -1,8 +1,10 @@
 package com.example.cluster;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
-    // right now this is very incomplete BUT I am so dang tired
 
     private Button btnChangePwd, btnDeleteAccount,
             changePwd, delete, signOut;
@@ -96,21 +97,34 @@ public class ProfileActivity extends AppCompatActivity {
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null) {
-                    user.delete()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileActivity.this, "We should have a confirmation dialog", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                                        finish();
-                                    } else {
-                                        Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
-                                    }
+                new AlertDialog.Builder(ProfileActivity.this)
+                        .setTitle(R.string.delete_account)
+                        .setMessage(R.string.delete_account_confirm)
+                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (user != null) {
+                                    user.delete()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(ProfileActivity.this, "We should have a confirmation dialog", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                                        finish();
+                                                    } else {
+                                                        Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                 }
-                            });
-                }
+                            }
+
+                        })
+                        .setNegativeButton(R.string.not_sure, null)
+                        .show();
+
             }
         });
 
