@@ -19,19 +19,11 @@ users/{example-user}/events/{created}
 
 ## Firestore Event Path (beta)
 
-**Method 1:**
-
-events/{country}/COLLECTION/{unique-event}
-- COLLECTION could be a search criteria? Like sports, etc?
-- Country document is the country 
-
-**Method 2:**
-
 events/{country}/USA/{unique-event}
 - country document is named country
 - collection for each country 
 
-**Event Sub-Path:**
+**Event**
 
 ../{unique event}
 > Stores basic event info
@@ -40,6 +32,9 @@ events/{country}/USA/{unique-event}
 
 > .creator
 >> - stores id of creator for easy profile referencing
+
+
+**Event Sub-Paths**:
 
 ../{unique event}/public/{star}/
 > .numStars
