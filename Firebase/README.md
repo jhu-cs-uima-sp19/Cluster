@@ -37,3 +37,11 @@ events/{country}/USA/{unique-event}
 
 > .creator
 >> - stores id of creator for easy profile referencing
+
+../{unique event}/public/{star}/
+> .numStars
+> - number of stars
+
+> .userStar[]
+> - optional array of users that have starred the event
+
