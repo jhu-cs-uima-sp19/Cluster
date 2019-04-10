@@ -8,4 +8,24 @@
     <string name="hello_interested_fragment">Hello interested fragment</string>
     <string name="hello_find_fragment">Hello find fragment</string>
 
+    <string name="email_hint">Email</string>
+    <string name="pwd_hint">Password</string>
+
+    <string name="login">LOG IN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="pwd_forgot">Forgot password?</string>
+    <string name="access_denied">Authentication failed, access denied.</string>
+    <string name="sign_up_fail">Sign up failed, please try again: </string>
+
+    <string name="missing_email">Please enter an email.</string>
+    <string name="missing_pwd">Please enter a password.</string>
+    <string name="minimum_pwd">Password must be 6 characters or longer.</string>
+
+    <string name="reset_pwd">Reset Password</string>
+    <string name="reset_pwd_instr">Enter your email to have a password reset link sent to you.</string>
+    <string name="reset_pwd_fail">Failed to send email link. Does that account exist?</string>
+    <string name="reset_pwd_success">Email sent!</string>
+
+    <string name="sign_out">SIGN OUT</string>
+    <string name="delete_account">Delete Account</string>
 </resources>
