@@ -18,8 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button btnChangePwd, btnDeleteAccount,
-            changePwd, delete, signOut;
+    private Button btnChangePwd, btnDeleteAccount, signOut;
 
     private EditText password, newPassword;
     private FirebaseAuth.AuthStateListener authListener;
@@ -97,7 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(ProfileActivity.this)
+                new AlertDialog.Builder(ProfileActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
                         .setTitle(R.string.delete_account)
                         .setMessage(R.string.delete_account_confirm)
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
@@ -110,11 +109,10 @@ public class ProfileActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(ProfileActivity.this, "We should have a confirmation dialog", Toast.LENGTH_SHORT).show();
                                                         startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                                                         finish();
                                                     } else {
-                                                        Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(ProfileActivity.this, R.string.delete_account_failure, Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
@@ -131,7 +129,19 @@ public class ProfileActivity extends AppCompatActivity {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                auth.signOut();
+                new AlertDialog.Builder(ProfileActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
+                        .setTitle(R.string.sign_out_dialog)
+                        .setMessage(R.string.sign_out_confirm)
+                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                auth.signOut();
+                            }
+
+                        })
+                        .setNegativeButton(R.string.not_sure, null)
+                        .show();
             }
         });
 

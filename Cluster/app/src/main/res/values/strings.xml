@@ -27,8 +27,11 @@
     <string name="reset_pwd_success">Email sent!</string>
 
     <string name="sign_out">SIGN OUT</string>
+    <string name="sign_out_dialog">Sign Out</string>
+    <string name="sign_out_confirm">Are you sure you want to sign out?</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_account_confirm">Are you sure you want to delete your account?</string>
+    <string name="delete_account_failure">Failed to delete account.</string>
     <string name="sure">Yes, I\'m sure</string>
     <string name="not_sure">No</string>
 </resources>
