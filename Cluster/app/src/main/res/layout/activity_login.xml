@@ -23,7 +23,10 @@
             android:layout_height="@dimen/title_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="fitXY"
+            android:src="@drawable/app_name_fo"
+            android:visibility="visible"
+            app:srcCompat="@drawable/app_name_fo" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
