@@ -5,4 +5,6 @@
     <color name="colorAccent">#819ca9</color>
     <color name="colorAccentDark">#29434E</color>
     <color name="colorText">#000000</color>
+    <color name="year">#999999</color>
+    <color name="title">#222222</color>
 </resources>
