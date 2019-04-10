@@ -20,16 +20,19 @@ users/{example-user}/events/{created}
 ## Firestore Event Path (beta)
 
 **Method 1:**
+
 events/{country}/COLLECTION/{unique-event}
 - COLLECTION could be a search criteria? Like sports, etc?
 - Country document is the country 
 
 **Method 2:**
+
 events/{country}/USA/{unique-event}
 - country document is named country
 - collection for each country 
 
 **Event Sub-Path:**
+
 ../{unique event}
 > Stores basic event info
 > Array of searchable keywords for querying
@@ -45,3 +48,5 @@ events/{country}/USA/{unique-event}
 > .userStar[]
 > - optional array of users that have starred the event
 
+
+**REMEMBER WHEN DELETING PARENT DIRECTORIES, SUB-DIRECTORIES MUST ALSO BE MANUALLY DELETED AS WELL**
