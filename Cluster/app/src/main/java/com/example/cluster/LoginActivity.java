@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "" + R.string.sign_up_fail + task.getException(),
                                             Toast.LENGTH_SHORT).show();
-                                // On a success, just move to the main activity
+                                    // On a success, just move to the main activity
                                 } else {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
@@ -138,5 +138,10 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() { //so cannot get back in after signing out
+        //do nothing
     }
 }
