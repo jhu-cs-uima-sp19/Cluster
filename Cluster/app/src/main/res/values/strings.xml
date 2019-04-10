@@ -13,7 +13,7 @@
 
     <string name="login">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
-    <string name="pwd_forgot">Forgot password?</string>
+    <string name="pwd_forgot">Forgot Password?</string>
     <string name="access_denied">Authentication failed, access denied</string>
     <string name="sign_up_fail">Sign up failed, please try again: </string>
 

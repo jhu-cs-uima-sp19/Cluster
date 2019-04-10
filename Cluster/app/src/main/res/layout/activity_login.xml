@@ -70,12 +70,12 @@
             android:paddingRight="16dp">
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_sign_up"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:padding="16dp"
-                android:text="@string/login"
+                android:text="@string/sign_up"
                 android:textColor="@android:color/black" />
 
             <Space
@@ -84,12 +84,12 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btn_sign_up"
+                android:id="@+id/btn_login"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
                 android:padding="16dp"
-                android:text="@string/sign_up"
+                android:text="@string/login"
                 android:textColor="@android:color/black" />
 
         </LinearLayout>
@@ -102,7 +102,7 @@
             android:background="@null"
             android:text="@string/pwd_forgot"
             android:textAllCaps="false"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
