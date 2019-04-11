@@ -46,18 +46,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent(); //get intent passed to it
         int fragId = intent.getIntExtra("fragId", 1);//get data passed in intent
 
-        switch (fragId){
-            case 0: loadFragment(new ManageFragment());
-                    break;
-            case 1: loadFragment(new InterestedFragment());
-                    break;
-            case 2: loadFragment(new FindFragment());
-                    break;
-            default: loadFragment(new InterestedFragment());
-        }
-        //loading the default fragment
-        //loadFragment(new ManageFragment());
-
         auth = FirebaseAuth.getInstance();
         btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
 
@@ -69,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        // Go to the fragment that was selected on the home screen
+        switch (fragId){
+            case 0: navigation.setSelectedItemId(R.id.navigation_manage);
+                break;
+            case 1: navigation.setSelectedItemId(R.id.navigation_interested);
+                break;
+            case 2: navigation.setSelectedItemId(R.id.navigation_find);
+                break;
+            default: navigation.setSelectedItemId(R.id.navigation_interested);
+        }
 
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
