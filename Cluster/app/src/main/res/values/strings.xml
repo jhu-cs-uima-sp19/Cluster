@@ -34,4 +34,8 @@
     <string name="delete_account_failure">Failed to delete account.</string>
     <string name="sure">Yes, I\'m sure</string>
     <string name="not_sure">No</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
