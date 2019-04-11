@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent(); //get intent passed to it
-        int fragID = intent.getIntExtra("fragID", 1);//get data passed in intent
+        int fragId = intent.getIntExtra("fragId", 1);//get data passed in intent
 
-        switch (fragID){
+        switch (fragId){
             case 0: loadFragment(new ManageFragment());
                     break;
             case 1: loadFragment(new InterestedFragment());

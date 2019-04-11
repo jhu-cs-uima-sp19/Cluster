@@ -17,25 +17,28 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent intent;
             switch (item.getItemId()) {
                 case R.id.navigation_manage:
-                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    intent.putExtra("fragID", 0);
+                    intent = new Intent(HomeActivity.this, MainActivity.class);
+                    intent.putExtra("fragId", 0);
                     startActivity(intent);
 //                    mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_interested:
-                    Intent intent2 = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent2);
+                    intent = new Intent(HomeActivity.this, MainActivity.class);
+                    intent.putExtra("fragId", 1);
+                    startActivity(intent);
 //                    mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_find:
-                    Intent intent3 = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent3);
+                    intent = new Intent(HomeActivity.this, MainActivity.class);
+                    intent.putExtra("fragId", 2);
+                    startActivity(intent);
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
+                default: return false;
             }
-            return false;
         }
     };
 
