@@ -43,9 +43,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent(); //get intent passed to it
+        int fragID = intent.getIntExtra("fragID", 1);//get data passed in intent
 
+        switch (fragID){
+            case 0: loadFragment(new ManageFragment());
+                    break;
+            case 1: loadFragment(new InterestedFragment());
+                    break;
+            case 2: loadFragment(new FindFragment());
+                    break;
+            default: loadFragment(new InterestedFragment());
+        }
         //loading the default fragment
-        loadFragment(new ManageFragment());
+        //loadFragment(new ManageFragment());
 
         auth = FirebaseAuth.getInstance();
         btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);

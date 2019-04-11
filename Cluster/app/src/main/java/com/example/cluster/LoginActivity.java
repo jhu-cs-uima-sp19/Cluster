@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // if we're already logged in go to the main activity
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
 
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, getString(R.string.access_denied), Toast.LENGTH_LONG).show();
                                 } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                     finish();
                                 }
                             }
