@@ -30,6 +30,13 @@
     <string name="change_pwd_confirm">Confirm</string>
     <string name="old_pwd_hint">Old password</string>
     <string name="new_pwd_hint">New password</string>
+    <string name="pwd_update_success">Password successfully updated, logging out…</string>
+    <string name="pwd_update_fail">Failed to update password</string>
+    <string name="bad_pwd">Bad password</string>
+    <string name="same_pwd">New password must be different</string>
+    <string name="change_pwd_dialogue">Change password</string>
+    <string name="change_pwd_logout">Are you sure you want to change your password? This will log you out.</string>
+
     <string name="sign_out">SIGN OUT</string>
     <string name="sign_out_dialog">Sign Out</string>
     <string name="sign_out_confirm">Are you sure you want to sign out?</string>

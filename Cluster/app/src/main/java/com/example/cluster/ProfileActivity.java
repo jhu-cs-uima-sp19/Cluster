@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,7 +43,6 @@ public class ProfileActivity extends AppCompatActivity {
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
@@ -74,25 +76,56 @@ public class ProfileActivity extends AppCompatActivity {
         changePwdConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null && !newPwd.getText().toString().trim().equals("")) {
+                AuthCredential cred = EmailAuthProvider.getCredential(
+                        auth.getCurrentUser().getEmail(),
+                        pwd.getText().toString().trim()
+                );
+
+                if (user != null && !newPwd.getText().toString().trim().equals("") && !pwd.getText().toString().trim().equals("")) {
                     if (newPwd.getText().toString().trim().length() < MIN_PWD_LEN) {
                         newPwd.setError(getString(R.string.minimum_pwd));
-                    } else {
-                        user.updatePassword(newPwd.getText().toString().trim())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(ProfileActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
-                                            auth.signOut();
-                                        } else {
-                                            Toast.makeText(ProfileActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
                     }
+                    user.reauthenticateAndRetrieveData(cred)
+                            .addOnCompleteListener(ProfileActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        pwd.setError(getString(R.string.bad_pwd));
+                                    } else if(pwd.getText().toString().trim().equals(newPwd.getText().toString().trim())) {
+                                        newPwd.setError(getString(R.string.same_pwd));
+                                    } else {
+                                        new AlertDialog.Builder(ProfileActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
+                                                .setTitle(R.string.change_pwd_dialogue)
+                                                .setMessage(R.string.change_pwd_logout)
+                                                .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
+                                                {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        user.updatePassword(newPwd.getText().toString().trim())
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> innerTask) {
+                                                                        if (innerTask.isSuccessful()) {
+                                                                            Toast.makeText(ProfileActivity.this, R.string.pwd_update_success, Toast.LENGTH_SHORT).show();
+                                                                            auth.signOut();
+                                                                            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                                                        } else {
+                                                                            Toast.makeText(ProfileActivity.this, R.string.pwd_update_fail, Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+                                                                });
+                                                    }
+
+                                                })
+                                                .setNegativeButton(R.string.not_sure, null)
+                                                .show();
+                                    }
+                                }
+                            });
                 } else if (newPwd.getText().toString().trim().equals("")) {
                     newPwd.setError("Enter password");
+                } else if (pwd.getText().toString().trim().equals("")) {
+                    pwd.setError("Enter password");
                 }
             }
         });

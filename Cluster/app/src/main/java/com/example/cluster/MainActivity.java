@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
         btnHome = (ImageButton) findViewById(R.id.home_button);
 
-        // if we're already logged in go to the main activity
+        // if we're not logged in go to login activity
         if (auth.getCurrentUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
