@@ -23,7 +23,7 @@ events/{country}/USA/{unique-event}
 - country document is named country
 - collection for each country 
 
-**Event**
+**Event:**
 
 ../{unique event}
 > Stores basic event info
@@ -34,7 +34,7 @@ events/{country}/USA/{unique-event}
 >> - stores id of creator for easy profile referencing
 
 
-**Event Sub-Paths**:
+**Event Sub-Paths:**
 
 ../{unique event}/public/{star}/
 > .numStars
@@ -44,4 +44,25 @@ events/{country}/USA/{unique-event}
 > - optional array of users that have starred the event
 
 
-**REMEMBER WHEN DELETING PARENT DIRECTORIES, SUB-DIRECTORIES MUST ALSO BE MANUALLY DELETED AS WELL**
+
+
+## Firebase Storage
+
+**User Profile Images:**
+
+users/
+>image name is users unique id
+
+**Event Image(s) _beta_:**
+
+events/{country}/{eventId}/{userId}/
+> country may be removed to simplify things
+
+> eventId is the unque event identfier
+
+> userId is the id of the user that created the event
+
+> image name will be a set name or number
+
+
+**REMEMBER WHEN DELETING PARENT DIRECTORIES, SUB-DIRECTORIES AND STORAGE MUST ALSO BE MANUALLY DELETED AS WELL**
