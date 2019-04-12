@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         //Firebase makes this really easy
         auth = FirebaseAuth.getInstance();
 
-        // if we're already logged in go to the main activity
+        // if we're already logged in go to the home activity
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     // On a success, just move to the main activity
                                 } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                     finish();
                                 }
                             }
