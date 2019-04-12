@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     ImageButton btnSettings;
+    ImageButton btnHome;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
+        btnHome = (ImageButton) findViewById(R.id.home_button);
 
         // if we're already logged in go to the main activity
         if (auth.getCurrentUser() == null) {
@@ -73,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
