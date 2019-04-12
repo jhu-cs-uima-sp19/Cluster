@@ -27,6 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
+    private boolean pwdVisible = false;
+
     private final int MIN_PWD_LEN = 6;
 
     @Override
@@ -67,9 +69,17 @@ public class ProfileActivity extends AppCompatActivity {
         btnChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pwd.setVisibility(View.VISIBLE);
-                newPwd.setVisibility(View.VISIBLE);
-                changePwdConf.setVisibility(View.VISIBLE);
+                if (!pwdVisible) {
+                    pwd.setVisibility(View.VISIBLE);
+                    newPwd.setVisibility(View.VISIBLE);
+                    changePwdConf.setVisibility(View.VISIBLE);
+                    pwdVisible = true;
+                } else {
+                    pwd.setVisibility(View.GONE);
+                    newPwd.setVisibility(View.GONE);
+                    changePwdConf.setVisibility(View.GONE);
+                    pwdVisible = false;
+                }
             }
         });
 
@@ -175,6 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 auth.signOut();
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                             }
 
                         })

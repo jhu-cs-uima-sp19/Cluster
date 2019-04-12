@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/colorAccentDark"
+    android:background="@color/colorAccent"
     android:fitsSystemWindows="true"
     tools:context="com.example.cluster.ResetPasswordActivity">
 
@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@color/colorAccentDark"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
             android:text="@string/change_pwd"
             android:textColor="@android:color/white" />
 
