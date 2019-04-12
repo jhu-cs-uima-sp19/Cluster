@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (password.length() < MIN_PWD_LEN) {
-                    Toast.makeText(getApplicationContext(), R.string.minimum_pwd, Toast.LENGTH_SHORT).show();
+                    inputPwd.setError(getString(R.string.minimum_pwd));
                     return;
                 }
 
