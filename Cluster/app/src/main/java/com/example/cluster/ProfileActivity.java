@@ -18,11 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private Button btnChangePwd, btnDeleteAccount, signOut;
+    private Button btnChangePwd, changePwdConf, btnDeleteAccount, btnSignOut;
 
-    private EditText password, newPassword;
+    private EditText pwd, newPwd;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+
+    private final int MIN_PWD_LEN = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,32 +50,35 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
 
-        //btnChangePwd = (Button) findViewById(R.id.change_password_button);
+        btnChangePwd = (Button) findViewById(R.id.btn_change_pwd);
+        changePwdConf = (Button) findViewById(R.id.btn_change_pwd_confirm);
         btnDeleteAccount = (Button) findViewById(R.id.btn_delete_account);
-        //changePwd = (Button) findViewById(R.id.changePwd);
-        signOut = (Button) findViewById(R.id.btn_sign_out);
+        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
 
-        //password = (EditText) findViewById(R.id.password);
-        //newPassword = (EditText) findViewById(R.id.newPassword);
+        pwd = (EditText) findViewById(R.id.pwd);
+        newPwd = (EditText) findViewById(R.id.newPwd);
 
-        /*btnChangePwd.setOnClickListener(new View.OnClickListener() {
+        pwd.setVisibility(View.GONE);
+        newPwd.setVisibility(View.GONE);
+        changePwdConf.setVisibility(View.GONE);
+
+        btnChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                password.setVisibility(View.GONE);
-                newPassword.setVisibility(View.VISIBLE);
-                changePwd.setVisibility(View.VISIBLE);
-                delete.setVisibility(View.GONE);
+                pwd.setVisibility(View.VISIBLE);
+                newPwd.setVisibility(View.VISIBLE);
+                changePwdConf.setVisibility(View.VISIBLE);
             }
         });
 
-        changePwd.setOnClickListener(new View.OnClickListener() {
+        changePwdConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user != null && !newPassword.getText().toString().trim().equals("")) {
-                    if (newPassword.getText().toString().trim().length() < 6) {
-                        newPassword.setError("Password too short, enter minimum 6 characters");
+                if (user != null && !newPwd.getText().toString().trim().equals("")) {
+                    if (newPwd.getText().toString().trim().length() < MIN_PWD_LEN) {
+                        newPwd.setError(getString(R.string.minimum_pwd));
                     } else {
-                        user.updatePassword(newPassword.getText().toString().trim())
+                        user.updatePassword(newPwd.getText().toString().trim())
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -86,11 +91,11 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 });
                     }
-                } else if (newPassword.getText().toString().trim().equals("")) {
-                    newPassword.setError("Enter password");
+                } else if (newPwd.getText().toString().trim().equals("")) {
+                    newPwd.setError("Enter password");
                 }
             }
-        });*/
+        });
 
 
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(ProfileActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
