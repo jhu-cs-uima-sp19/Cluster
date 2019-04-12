@@ -54,13 +54,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         auth = FirebaseAuth.getInstance();
-        btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
+        btnSettings = (ImageButton) findViewById(R.id.temp_settings_button2);
 
         // if we're already logged in go to the main activity
-        if (auth.getCurrentUser() == null) {
-            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-            finish();
-        }
+//        if (auth.getCurrentUser() == null) {
+//            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+//            finish();
+//        }
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

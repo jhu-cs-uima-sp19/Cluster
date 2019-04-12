@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
         btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
 
         // if we're already logged in go to the main activity
-        if (auth.getCurrentUser() == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        }
+//        if (auth.getCurrentUser() == null) {
+//            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            finish();
+//        }
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
