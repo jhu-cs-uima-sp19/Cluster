@@ -57,6 +57,10 @@ public class Event {
         this.location = location;
     }
 
+    public int getStars() {
+        return stars;
+    }
+
     public void star() {
         stars++;
     }
