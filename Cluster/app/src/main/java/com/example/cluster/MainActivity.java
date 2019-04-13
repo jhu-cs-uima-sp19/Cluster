@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         int fragId = intent.getIntExtra("fragId", 1);//get data passed in intent
 
         auth = FirebaseAuth.getInstance();
-        btnSettings = (ImageButton) findViewById(R.id.temp_settings_button);
+        btnSettings = (ImageButton) findViewById(R.id.profile_settings_main);
         btnHome = (ImageButton) findViewById(R.id.home_button);
 
         // if we're not logged in go to login activity
@@ -71,18 +72,18 @@ public class MainActivity extends AppCompatActivity {
             default: navigation.setSelectedItemId(R.id.navigation_interested);
         }
 
-        btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-            }
-        });
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        btnSettings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+//            }
+//        });
+//        btnHome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -98,5 +99,33 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() { //so cannot get back in after signing out
         //do nothing
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main2, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.profile_settings_main) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivityForResult(intent, 0);
+            return true;
+        }
+        if (id == R.id.home_button) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
