@@ -23,6 +23,11 @@
 
     </style>
 
+    <style name="HomeBottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+    </style>
+
     <style name="AlertDialogTheme">
         <item name="android:textColor">@android:color/black</item>
     </style>
