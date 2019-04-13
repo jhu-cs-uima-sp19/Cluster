@@ -18,8 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    ImageButton btnSettings;
-    ImageButton btnHome;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         int fragId = intent.getIntExtra("fragId", 1);//get data passed in intent
 
         auth = FirebaseAuth.getInstance();
-        btnSettings = (ImageButton) findViewById(R.id.profile_settings_main);
-        btnHome = (ImageButton) findViewById(R.id.home_button);
 
         // if we're not logged in go to login activity
         if (auth.getCurrentUser() == null) {
@@ -71,19 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default: navigation.setSelectedItemId(R.id.navigation_interested);
         }
-
-//        btnSettings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-//            }
-//        });
-//        btnHome.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -117,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_settings_main) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivityForResult(intent, 0);
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
             return true;
         }
         if (id == R.id.home_button) {

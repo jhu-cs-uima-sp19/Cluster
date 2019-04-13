@@ -5,8 +5,8 @@
     <string name="title_Find">Find</string>
 
     <string name="hello_manage_fragment">Hello manage fragment</string>
-    <string name="hello_interested_fragment">Hello interested fragment</string>
-    <string name="hello_find_fragment">Hello find fragment</string>
+    <string name="hello_interested_fragment">Interested Fragment Implementation in 2nd Sprint</string>
+    <string name="hello_find_fragment">Find Fragment Implementation in 2nd Sprint</string>
 
     <string name="email_hint">Email</string>
     <string name="pwd_hint">Password</string>

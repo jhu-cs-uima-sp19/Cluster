@@ -17,7 +17,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     FirebaseAuth auth;
-    ImageButton btnSettings;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -30,19 +29,16 @@ public class HomeActivity extends AppCompatActivity {
                     intent = new Intent(HomeActivity.this, MainActivity.class);
                     intent.putExtra("fragId", 0);
                     startActivity(intent);
-//                    mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_interested:
                     intent = new Intent(HomeActivity.this, MainActivity.class);
                     intent.putExtra("fragId", 1);
                     startActivity(intent);
-//                    mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_find:
                     intent = new Intent(HomeActivity.this, MainActivity.class);
                     intent.putExtra("fragId", 2);
                     startActivity(intent);
-//                    mTextMessage.setText(R.string.title_notifications);
                     return true;
                 default: return false;
             }
@@ -55,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         auth = FirebaseAuth.getInstance();
-        btnSettings = (ImageButton) findViewById(R.id.profile_settings_home);
 
         // if we're already logged in go to the main activity
         if (auth.getCurrentUser() == null) {
@@ -66,13 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-//        btnSettings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-//            }
-//        });
     }
 
     @Override
@@ -96,8 +84,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.profile_settings_home) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivityForResult(intent, 0);
+            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
             return true;
         }
 
