@@ -1,7 +1,5 @@
 package com.example.cluster;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,7 +14,7 @@ import java.util.List;
 
 public class ManageFragment extends Fragment {
 
-    private List<Event> movieList = new ArrayList<>();
+    private List<Event> managedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
 
@@ -33,58 +31,58 @@ public class ManageFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_manage, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        mAdapter = new EventAdapter(movieList);
+        mAdapter = new EventAdapter(managedEventList);
         //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        prepareMovieData();
+        prepDummyEventData();
         return v;
         // Inflate the layout for this fragment
 
     }
 
-    private void prepareMovieData() {
-        Event movie = new Event("Mad Max: Fury Road", "Action & Adventure", "2015");
-        movieList.add(movie);
+    private void prepDummyEventData() {
+        Event e = new Event("Mad Max: Fury Road", "Action & Adventure", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Inside Out", "Animation, Kids & Family", "2015");
-        movieList.add(movie);
+        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
-        movieList.add(movie);
+        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Shaun the Sheep", "Animation", "2015");
-        movieList.add(movie);
+        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("The Martian", "Science Fiction & Fantasy", "2015");
-        movieList.add(movie);
+        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Mission: Impossible Rogue Nation", "Action", "2015");
-        movieList.add(movie);
+        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Up", "Animation", "2009");
-        movieList.add(movie);
+        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Inside Out", "Animation, Kids & Family", "2015");
-        movieList.add(movie);
+        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
-        movieList.add(movie);
+        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Shaun the Sheep", "Animation", "2015");
-        movieList.add(movie);
+        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("The Martian", "Science Fiction & Fantasy", "2015");
-        movieList.add(movie);
+        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Mission: Impossible Rogue Nation", "Action", "2015");
-        movieList.add(movie);
+        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc");
+        managedEventList.add(e);
 
-        movie = new Event("Up", "Animation", "2009");
-        movieList.add(movie);
+        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc");
+        managedEventList.add(e);
 
         mAdapter.notifyDataSetChanged();
     }

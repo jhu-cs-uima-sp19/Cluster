@@ -2,15 +2,19 @@ package com.example.cluster;
 
 public class Event {
 
-    private String title, genre, year;
+    private String title, description, startTime, endTime, location;
+    private int stars;
 
     public Event() {
     }
 
-    public Event(String title, String genre, String year) {
+    public Event(String title, String description, String startTime, String endTime, String location) {
         this.title = title;
-        this.genre = genre;
-        this.year = year;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        stars = 0;
     }
 
     public String getTitle() {
@@ -21,19 +25,43 @@ public class Event {
         this.title = name;
     }
 
-    public String getYear() {
-        return year;
+    public String getDescription() {
+        return description;
     }
 
-    public void setYear(String year) {
-        this.year = year;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void star() {
+        stars++;
+    }
+
+    public void unStar() {
+        stars--;
     }
 }

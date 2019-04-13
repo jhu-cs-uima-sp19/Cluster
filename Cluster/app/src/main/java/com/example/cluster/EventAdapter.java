@@ -8,44 +8,60 @@ import android.support.v7.widget.RecyclerView;
 
         import java.util.List;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ManagedViewHolder> {
 
-    private List<Event> moviesList;
+    private static final int MAX_TITLE_LEN = 35;
+    private static final int MAX_DESC_LEN = 35;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, year, genre;
+    private List<Event> managedEvents;
 
-        public MyViewHolder(View view) {
+    public class ManagedViewHolder extends RecyclerView.ViewHolder {
+        public TextView title, startTime, description;
+
+        public ManagedViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
-            genre = (TextView) view.findViewById(R.id.genre);
-            year = (TextView) view.findViewById(R.id.year);
+            description = (TextView) view.findViewById(R.id.description);
+            startTime = (TextView) view.findViewById(R.id.start);
         }
     }
 
 
-    public EventAdapter(List<Event> moviesList) {
-        this.moviesList = moviesList;
+    public EventAdapter(List<Event> eventList) {
+        this.managedEvents = eventList;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ManagedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_list_row, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new ManagedViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Event movie = moviesList.get(position);
-        holder.title.setText(movie.getTitle());
-        holder.genre.setText(movie.getGenre());
-        holder.year.setText(movie.getYear());
+    public void onBindViewHolder(ManagedViewHolder holder, int position) {
+        Event e = managedEvents.get(position);
+        String dispTitle, dispDesc, dispStart;
+
+        dispTitle = e.getTitle();
+        if (dispTitle.length() > MAX_TITLE_LEN) {
+            dispTitle = dispTitle.substring(0,MAX_TITLE_LEN).trim() + "...";
+        }
+        holder.title.setText(dispTitle);
+
+        dispDesc = e.getDescription();
+        if (dispDesc.length() > MAX_DESC_LEN) {
+            dispDesc = dispDesc.substring(0, MAX_DESC_LEN).trim() + "...";
+        }
+        holder.description.setText(dispDesc);
+
+        // startTime will always be in a format we expect
+        holder.startTime.setText(e.getStartTime());
     }
 
     @Override
     public int getItemCount() {
-        return moviesList.size();
+        return managedEvents.size();
     }
 }
