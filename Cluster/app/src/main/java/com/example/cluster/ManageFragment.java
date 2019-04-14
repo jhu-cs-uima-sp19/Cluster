@@ -109,8 +109,8 @@ public class ManageFragment extends Fragment {
                                         DocumentSnapshot doc = task.getResult();
                                         Event e = new Event(doc.getString("Title"),
                                                 doc.getString("Desc"),
-                                                doc.getTimestamp("Start").toString(),
-                                                doc.getTimestamp("End").toString(),
+                                                doc.getTimestamp("Start"),
+                                                doc.getTimestamp("End"),
                                                 doc.getString("Loc"),
                                                 doc.getDocumentReference("orgId").toString(),
                                                 doc.getLong("stars").intValue(),

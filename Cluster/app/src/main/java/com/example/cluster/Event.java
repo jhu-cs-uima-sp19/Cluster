@@ -1,5 +1,9 @@
 package com.example.cluster;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class Event {
 
     private String title, description, startTime, endTime, location, orgId, docPath;
@@ -8,11 +12,13 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String startTime, String endTime, String location, String orgId, int stars, String docPath) {
+    public Event(String title, String description, com.google.firebase.Timestamp startTime, com.google.firebase.Timestamp endTime, String location, String orgId, int stars, String docPath) {
         this.title = title;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
+
+        DateFormat df = new SimpleDateFormat("MM/dd HH:mm");
+        this.startTime = df.format(startTime.toDate());
+        this.endTime = df.format(endTime.toDate());
         this.location = location;
         this.orgId = orgId;
         this.stars = stars;

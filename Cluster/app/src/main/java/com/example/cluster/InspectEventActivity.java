@@ -58,8 +58,8 @@ public class InspectEventActivity extends AppCompatActivity {
                     DocumentSnapshot doc = task.getResult();
                     e = new Event(doc.getString("Title"),
                             doc.getString("Desc"),
-                            doc.getTimestamp("Start").toString(),
-                            doc.getTimestamp("End").toString(),
+                            doc.getTimestamp("Start"),
+                            doc.getTimestamp("End"),
                             doc.getString("Loc"),
                             doc.getDocumentReference("orgId").toString(),
                             doc.getLong("stars").intValue(),
