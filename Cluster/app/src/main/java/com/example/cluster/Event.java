@@ -2,18 +2,19 @@ package com.example.cluster;
 
 public class Event {
 
-    private String title, description, startTime, endTime, location;
+    private String title, description, startTime, endTime, location, orgId;
     private int stars;
 
     public Event() {
     }
 
-    public Event(String title, String description, String startTime, String endTime, String location) {
+    public Event(String title, String description, String startTime, String endTime, String location, String orgId) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
+        this.orgId = orgId;
         stars = 0;
     }
 
@@ -67,5 +68,9 @@ public class Event {
 
     public void unStar() {
         stars--;
+    }
+
+    public boolean checkOrgId(String orgId) {
+        return (this.orgId.equals(orgId));
     }
 }

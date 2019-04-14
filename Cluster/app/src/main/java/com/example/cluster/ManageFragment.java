@@ -2,19 +2,32 @@ package com.example.cluster;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class ManageFragment extends Fragment {
 
+    // Access a Cloud Firestore instance from your Activity
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private List<Event> managedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
@@ -73,43 +86,58 @@ public class ManageFragment extends Fragment {
     }
 
     private void prepDummyEventData() {
-        Event e = new Event("Mad Max: Fury Road", "Action & Adventure", "2015", "2015", "dummyLoc");
+        db.collection("events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
+        Event e = new Event("Mad Max: Fury Road", "Action & Adventure", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc");
+        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc");
+        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc");
+        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc");
+        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc");
+        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc");
+        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc");
+        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc");
+        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc");
+        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc");
+        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc");
+        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
-        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc");
+        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc", "0");
         managedEventList.add(e);
 
         mAdapter.notifyDataSetChanged();

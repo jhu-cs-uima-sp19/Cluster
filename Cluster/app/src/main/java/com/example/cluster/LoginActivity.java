@@ -5,20 +5,29 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPwd;
     private FirebaseAuth auth;
+    private FirebaseFirestore db;
     private Button btnSignUp, btnLogin, btnPwdReset;
     private final int MIN_PWD_LEN = 6;
 
@@ -35,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
+
+        db = FirebaseFirestore.getInstance();
 
         // set the view now
         setContentView(R.layout.activity_login);
@@ -131,8 +142,29 @@ public class LoginActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                     // On a success, just move to the main activity
                                 } else {
-                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                    finish();
+                                    // Create a new user in firestore db with uid and email
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("uid", auth.getUid());
+                                    user.put("email", inputEmail.getText().toString().trim());
+
+                                    // Add a new document with a generated ID
+                                    db.collection("users")
+                                            .add(user)
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                                    finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(LoginActivity.this, "" + R.string.sign_up_fail + e,
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
                                 }
                             }
                         });
