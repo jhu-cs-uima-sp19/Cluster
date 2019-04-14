@@ -64,15 +64,14 @@ public class ManageFragment extends Fragment {
             public void onItemClick(int position, View v) {
                 Event e = managedEventList.get(position);
                 startActivity(new Intent(getActivity(), InspectEventActivity.class)
-                        /*
-                         * WE NEED TO MAKE SURE THE INSPECT EVENT ACTIVITY CAN CAUSE CHANGES TO THE EVENT, SO WE SHOULD GIVE IT THE EVENT'S ID
-                         * .putExtra("id", e.getId())
-                         * */);
+                        .putExtra("docPath", e.getDocPath())
+                );
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
-                managedEventList.get(position).star();
+                Event e = managedEventList.get(position);
+                e.star();
             }
         });
 
@@ -85,13 +84,13 @@ public class ManageFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        prepDummyEventData();
+        populateManaged();
         return v;
         // Inflate the layout for this fragment
 
     }
 
-    private void prepDummyEventData() {
+    private void populateManaged() {
         DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("created");
 
         dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -103,7 +102,6 @@ public class ManageFragment extends Fragment {
                     if (document.exists()) {
                         for (Map.Entry<String, Object> e : document.getData().entrySet()) {
                             eventPath = document.getDocumentReference(e.getKey()).getPath();
-                            Log.d(TAG, eventPath);
                             db.document(eventPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -113,9 +111,10 @@ public class ManageFragment extends Fragment {
                                                 doc.getString("Desc"),
                                                 doc.getTimestamp("Start").toString(),
                                                 doc.getTimestamp("End").toString(),
-                                                doc.getGeoPoint("Loc").toString(),
+                                                doc.getString("Loc"),
                                                 doc.getDocumentReference("orgId").toString(),
-                                                doc.getLong("stars").intValue());
+                                                doc.getLong("stars").intValue(),
+                                                doc.getReference().getPath());
                                         managedEventList.add(e);
                                         mAdapter.notifyDataSetChanged();
                                     } else {

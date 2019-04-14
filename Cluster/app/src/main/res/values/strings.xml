@@ -49,4 +49,18 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="missing_text_resource">Could not load event field from Firestore</string>
+    <string name="event_title">Title</string>
+    <string name="set_start">Start time</string>
+    <string name="set_end">End time</string>
+    <string name="event_location">Location</string>
+    <string name="event_description">Description</string>
+    <string name="delete_event">Delete Event</string>
+    <string name="delete_event_confirm">Are you sure you want to delete this event?</string>
+
+    <string name="no_input_error">No input</string>
+    <string name="length_error">Input too long</string>
+    <string name="time_passed_error">Given start time has already passed</string>
+    <string name="negative_duration_error">End time must pass after start time</string>
 </resources>

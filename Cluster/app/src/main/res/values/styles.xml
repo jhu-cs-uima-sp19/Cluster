@@ -10,6 +10,9 @@
         <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
         <item name="android:textColorHint">@color/colorPrimaryDark</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="colorControlNormal">@color/desc</item>
+        <item name="colorControlActivated">@color/title</item>
+        <item name="colorControlHighlight">@color/title</item>
     </style>
 
     <style name="NoBar" parent="Theme.AppCompat.Light.NoActionBar">
