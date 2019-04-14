@@ -8,14 +8,14 @@ public class Event {
     public Event() {
     }
 
-    public Event(String title, String description, String startTime, String endTime, String location, String orgId) {
+    public Event(String title, String description, String startTime, String endTime, String location, String orgId, int stars) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
         this.orgId = orgId;
-        stars = 0;
+        this.stars = stars;
     }
 
     public String getTitle() {

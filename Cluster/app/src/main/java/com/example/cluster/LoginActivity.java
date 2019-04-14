@@ -144,27 +144,12 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     // Create a new user in firestore db with uid and email
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("uid", auth.getUid());
                                     user.put("email", inputEmail.getText().toString().trim());
 
                                     // Add a new document with a generated ID
-                                    db.collection("users")
-                                            .add(user)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                                    finish();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(LoginActivity.this, "" + R.string.sign_up_fail + e,
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-
+                                    db.collection("users").document(auth.getUid()).set(user);
+                                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    finish();
                                 }
                             }
                         });

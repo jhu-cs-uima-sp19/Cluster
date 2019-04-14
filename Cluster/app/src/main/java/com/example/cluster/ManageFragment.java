@@ -15,19 +15,22 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
 public class ManageFragment extends Fragment {
 
     // Access a Cloud Firestore instance from your Activity
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
+    FirebaseAuth auth;
     private List<Event> managedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
@@ -79,6 +82,9 @@ public class ManageFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         prepDummyEventData();
         return v;
         // Inflate the layout for this fragment
@@ -86,60 +92,45 @@ public class ManageFragment extends Fragment {
     }
 
     private void prepDummyEventData() {
-        db.collection("events")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
+        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("created");
+
+        dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String eventPath;
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        for (Map.Entry<String, Object> e : document.getData().entrySet()) {
+                            eventPath = document.getDocumentReference(e.getKey()).getPath();
+                            Log.d(TAG, eventPath);
+                            db.document(eventPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        Event e = new Event(doc.getString("Title"),
+                                                doc.getString("Desc"),
+                                                doc.getTimestamp("Start").toString(),
+                                                doc.getTimestamp("End").toString(),
+                                                doc.getGeoPoint("Loc").toString(),
+                                                doc.getDocumentReference("orgId").toString(),
+                                                doc.getLong("stars").intValue());
+                                        managedEventList.add(e);
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        Log.d(TAG, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
                         }
+                    } else {
+                        Log.d(TAG, "No such document");
                     }
-                });
-
-        Event e = new Event("Mad Max: Fury Road", "Action & Adventure", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Inside Out", "Animation, Kids & Family", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Star Wars: Episode VII - The Force Awakens", "Action", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Shaun the Sheep", "Animation", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("The Martian", "Science Fiction & Fantasy", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Mission: Impossible Rogue Nation", "Action", "2015", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        e = new Event("Up", "Animation", "2009", "2015", "dummyLoc", "0");
-        managedEventList.add(e);
-
-        mAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 }
