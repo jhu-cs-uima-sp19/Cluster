@@ -9,7 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,16 +17,22 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -50,6 +56,15 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // if we're not logged in go to login activity
+        if (auth.getCurrentUser() == null) {
+            startActivity(new Intent(AddEventActivity.this, LoginActivity.class));
+            finish();
+        }
+
         fabDelete = (FloatingActionButton) findViewById(R.id.fab_delete);
         fabSave = (FloatingActionButton) findViewById(R.id.fab_save);
 
@@ -70,6 +85,7 @@ public class AddEventActivity extends AppCompatActivity {
 
         // need to make sure these aren't null
         Calendar c = Calendar.getInstance();
+        c.setTime(today);
         startMinute = c.MINUTE;
         endMinute = c.MINUTE;
         startHour = c.HOUR_OF_DAY;
@@ -120,7 +136,7 @@ public class AddEventActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                btnStartDate.setText(String.format("%02d/%02d/%04d", month, dayOfMonth, year));
+                                btnStartDate.setText(String.format("%02d/%02d/%04d", month+1, dayOfMonth, year));
                                 startYear = year;
                                 startMonth = month;
                                 startDay = dayOfMonth;
@@ -137,7 +153,7 @@ public class AddEventActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                btnEndDate.setText(String.format("%02d/%02d/%04d", month, dayOfMonth, year));
+                                btnEndDate.setText(String.format("%02d/%02d/%04d", month+1, dayOfMonth, year));
                                 endYear = year;
                                 endMonth = month;
                                 endDay = dayOfMonth;
@@ -168,6 +184,7 @@ public class AddEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // welcome to the funky java date zone
+                //convert start and end to timestamps
                 Calendar c = Calendar.getInstance();
 
                 c.clear();
@@ -204,18 +221,48 @@ public class AddEventActivity extends AppCompatActivity {
                 } else if (description.getText().toString().trim().length() > MAX_DESC) {
                     description.setError(getText(R.string.length_error));
                 //time hasn't already passed
-                } else if (tsStart.compareTo(tsNow) > 0) {
+                } else if (tsStart.compareTo(tsNow) < 0) {
                     Toast.makeText(AddEventActivity.this, R.string.time_passed_error, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "START: " +tsStart + " NOW: " + tsNow);
                 //ends after it starts
                 } else if (tsStart.compareTo(tsEnd) >= 0) {
                     Toast.makeText(AddEventActivity.this, R.string.negative_duration_error, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(AddEventActivity.this, "SUCCESS!", Toast.LENGTH_SHORT).show();
-                }
-                //add it to firestore with correct mapping and correct document reference path to user
+                    //add it to firestore with correct mapping and correct document reference path to user
                     //right now let's just do example-country because we don't need it to be that fancy for sprint 1
-                    //convert start and end to timestamps
-                //add the document reference path to the user's "created" events
+                    // Create a new user in firestore db with uid and email
+                    final DocumentReference orgDoc = db.collection("users/").document(auth.getUid());
+                    CollectionReference createdEvent = db.collection("events/country/" + "example-country/");
+
+                    Map<String, Object> event = new HashMap<>();
+                    event.put("Title", title.getText().toString().trim());
+                    event.put("Loc", location.getText().toString().trim());
+                    event.put("Desc", description.getText().toString().trim());
+                    event.put("Start", tsStart);
+                    event.put("End", tsEnd);
+                    event.put("orgId", orgDoc);
+                    event.put("stars", 0);
+
+                    // Add a new document with a generated ID
+                    createdEvent.add(event)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Map<String, Object> createdEvent = new HashMap<>();
+                                    createdEvent.put(documentReference.getId(), documentReference);
+                                    //add the document reference path to the user's "created" events
+                                    orgDoc.collection("events").document("created")
+                                            .update(createdEvent);
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error adding document", e);
+                                }
+                            });
+                    finish();
+                }
             }
         });
     }

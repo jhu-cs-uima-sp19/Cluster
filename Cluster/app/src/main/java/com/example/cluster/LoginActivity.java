@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Map<String, Object> user = new HashMap<>();
                                     user.put("email", inputEmail.getText().toString().trim());
 
-                                    // Add a new document with a generated ID
+                                    // Add a new document with ID = userID
                                     db.collection("users").document(auth.getUid()).set(user);
                                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                     finish();
