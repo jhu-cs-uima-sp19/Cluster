@@ -295,6 +295,7 @@ public class AddEventActivity extends AppCompatActivity {
         });
     }
 
+    //check if path has been created yet. if not use boolean to enact a set instead of update fcn
     private void isNewUser() {
         DocumentReference dr = db.collection("users/").document(auth.getUid());
         dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
