@@ -1,0 +1,47 @@
+
+Existing Username / Password:
+User: mason2smart@gmail.com
+Password: Password
+
+
+Completed Features:
+
+The cluster app now has a working Firebase database that uses the style
+guidelines written in the Firebase Readme. The database stores information
+for each event with fields for the title, time start, time end, description
+and user created.
+
+New events can be added through the manage screen with a floating button. The
+manage screen displays these events through a recycler view. The recycler
+view uses the created event and event adapter classes to display the information
+according to the event_list_row layout.
+
+The event creation screen allows the user to specify what event they are
+creating. The edit text fields change the title, location, and description
+respectively. The start time and end time bring up calendar popups that allow
+the user to easily select the exact time and date. The app also checks to make
+sure that the start time and end time make sense (nothing before the current
+time and the end time comes after the start).The created events go into
+the firebase database under events under the corresponding user.
+
+The manage events screen itself is one fragment of a triple bottom navigation
+bar. There are corresponding fragments for the interested and find screens
+and the bottom nav highlights based on which is currently selected. The buttons
+can be used to navigate between these fragments.
+
+The app starts on a login screen that opens if the user is not currently logged
+in. We have done the layout for this screen and added our logo and a backgound
+image. After a correct username/password is passed, the app goes to a currently
+blank homescreen. From this screen, the user can navigate to the other fragments
+using the bottom nav. From the fragments, the user can go back to the home
+screen using the home button.
+
+The user can also change his/her password and log out. There is also a simple
+layout for the user profile settings. We currently have to reload the manage
+fragment to see newly created events (switch to interested and back). We will
+fix this in the second sprint.
+
+The recycler view java classes can be reused for each of the other fragments.
+The recyvler view has clickable objects and is scrollable.
+
+

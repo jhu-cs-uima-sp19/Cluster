@@ -252,9 +252,9 @@ public class AddEventActivity extends AppCompatActivity {
                                     createdEvent.put(documentReference.getId(), documentReference);
                                     //add the document reference path to the user's "created" events
                                     userReference.collection("events").document("created")
-                                            .set(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            .update(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                                        public void onComplete(@NonNull Task<Void> task) { //New Task Upon Completion
                                             Toast.makeText(AddEventActivity.this, "Event Created",
                                                     Toast.LENGTH_SHORT).show();
                                         }
@@ -264,6 +264,8 @@ public class AddEventActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddEventActivity.this, "Event Creation Failed",
+                                            Toast.LENGTH_SHORT).show();
                                     Log.w(TAG, "Error adding document", e);
                                 }
                             });
