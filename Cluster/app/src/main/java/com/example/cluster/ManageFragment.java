@@ -112,7 +112,7 @@ public class ManageFragment extends Fragment {
                                                 doc.getTimestamp("Start"),
                                                 doc.getTimestamp("End"),
                                                 doc.getString("Loc"),
-                                                doc.getDocumentReference("orgId").toString(),
+                                                doc.getString("creator"),
                                                 doc.getLong("stars").intValue(),
                                                 doc.getReference().getPath());
                                         managedEventList.add(e);
