@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -144,10 +145,14 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     // Create a new user in firestore db with uid and email
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("email", inputEmail.getText().toString().trim());
+                                    //user.put("email", inputEmail.getText().toString().trim());
 
+                                    FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
+                                    User.updateEmail(inputEmail.getText().toString().trim());
+
+    
                                     // Add a new document with ID = userID
-                                    db.collection("users").document(auth.getUid()).set(user);
+                                    //db.collection("users").document(auth.getUid()).set(user);
                                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                     finish();
                                 }

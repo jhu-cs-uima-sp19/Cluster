@@ -25,6 +25,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
@@ -37,6 +38,7 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class AddEventActivity extends AppCompatActivity {
+    boolean newuser = true;
 
     private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
     private static final DateFormat stf = new SimpleDateFormat("HH:mm");
@@ -64,6 +66,8 @@ public class AddEventActivity extends AppCompatActivity {
             startActivity(new Intent(AddEventActivity.this, LoginActivity.class));
             finish();
         }
+
+        isNewUser(); //check if new user path has been created yet
 
         fabDelete = (FloatingActionButton) findViewById(R.id.fab_delete);
         fabSave = (FloatingActionButton) findViewById(R.id.fab_save);
@@ -251,14 +255,27 @@ public class AddEventActivity extends AppCompatActivity {
                                     Map<String, Object> createdEvent = new HashMap<>();
                                     createdEvent.put(documentReference.getId(), documentReference);
                                     //add the document reference path to the user's "created" events
-                                    userReference.collection("events").document("created")
-                                            .update(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) { //New Task Upon Completion
-                                            Toast.makeText(AddEventActivity.this, "Event Created",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    if(newuser){
+                                        userReference.collection("events").document("created")
+                                                .set(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) { //New Task Upon Completion
+                                                Toast.makeText(AddEventActivity.this, "Event Created",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        userReference.collection("events").document("created")
+                                                .update(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) { //New Task Upon Completion
+                                                Toast.makeText(AddEventActivity.this, "Event Created",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -274,4 +291,20 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void isNewUser() {
+        DocumentReference dr = db.collection("users/").document(auth.getUid());
+        dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String eventPath;
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                     newuser = false;
+                    }
+
+    }
+
+}}); newuser = true;}
 }
