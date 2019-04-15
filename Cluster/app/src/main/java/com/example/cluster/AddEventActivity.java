@@ -17,8 +17,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,6 +38,11 @@ import static android.content.ContentValues.TAG;
 
 public class AddEventActivity extends AppCompatActivity {
 
+    private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    private static final DateFormat stf = new SimpleDateFormat("HH:mm");
+    private static final int MAX_TITLE = 50;
+    private static final int MAX_LOC = 200;
+    private static final int MAX_DESC = 1000;
     FirebaseAuth auth;
     FirebaseFirestore db;
     TextView title, location, description;
@@ -43,13 +50,6 @@ public class AddEventActivity extends AppCompatActivity {
     FloatingActionButton fabDelete, fabSave;
     int startMinute, startHour, startDay, startMonth, startYear,
         endMinute, endHour, endDay, endMonth, endYear;
-
-    private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    private static final DateFormat stf = new SimpleDateFormat("HH:mm");
-
-    private static final int MAX_TITLE = 50;
-    private static final int MAX_LOC = 200;
-    private static final int MAX_DESC = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,8 +231,8 @@ public class AddEventActivity extends AppCompatActivity {
                     //add it to firestore with correct mapping and correct document reference path to user
                     //right now let's just do example-country because we don't need it to be that fancy for sprint 1
                     // Create a new user in firestore db with uid and email
-                    final DocumentReference orgDoc = db.collection("users/").document(auth.getUid());
-                    CollectionReference createdEvent = db.collection("events/country/" + "example-country/");
+                    final DocumentReference userReference = db.collection("users/").document(auth.getUid()); //user path
+                    CollectionReference createdEvent = db.collection("events/country/" + "example-country/"); //event path
 
                     Map<String, Object> event = new HashMap<>();
                     event.put("Title", title.getText().toString().trim());
@@ -240,7 +240,7 @@ public class AddEventActivity extends AppCompatActivity {
                     event.put("Desc", description.getText().toString().trim());
                     event.put("Start", tsStart);
                     event.put("End", tsEnd);
-                    event.put("orgId", orgDoc);
+                    event.put("creator", auth.getUid()); //store id of event owner
                     event.put("stars", 0);
 
                     // Add a new document with a generated ID
@@ -251,8 +251,14 @@ public class AddEventActivity extends AppCompatActivity {
                                     Map<String, Object> createdEvent = new HashMap<>();
                                     createdEvent.put(documentReference.getId(), documentReference);
                                     //add the document reference path to the user's "created" events
-                                    orgDoc.collection("events").document("created")
-                                            .update(createdEvent);
+                                    userReference.collection("events").document("created")
+                                            .set(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(AddEventActivity.this, "Event Created",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

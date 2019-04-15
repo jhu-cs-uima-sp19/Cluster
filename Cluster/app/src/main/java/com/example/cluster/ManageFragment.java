@@ -46,7 +46,7 @@ public class ManageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_manage, container, false);
+        View v = inflater.inflate(R.layout.fragment_manage, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         add = (FloatingActionButton) v.findViewById(R.id.fab_add);
