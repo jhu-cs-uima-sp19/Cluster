@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                     FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
                                     User.updateEmail(inputEmail.getText().toString().trim());
 
-    
+
                                     // Add a new document with ID = userID
                                     //db.collection("users").document(auth.getUid()).set(user);
                                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));

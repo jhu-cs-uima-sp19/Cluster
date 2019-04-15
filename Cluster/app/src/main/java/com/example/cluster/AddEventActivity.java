@@ -238,7 +238,7 @@ public class AddEventActivity extends AppCompatActivity {
                     final DocumentReference userReference = db.collection("users/").document(auth.getUid()); //user path
                     CollectionReference createdEvent = db.collection("events/country/" + "example-country/"); //event path
 
-                    Map<String, Object> event = new HashMap<>();
+                    final Map<String, Object> event = new HashMap<>();
                     event.put("Title", title.getText().toString().trim());
                     event.put("Loc", location.getText().toString().trim());
                     event.put("Desc", description.getText().toString().trim());
@@ -256,6 +256,9 @@ public class AddEventActivity extends AppCompatActivity {
                                     createdEvent.put(documentReference.getId(), documentReference);
                                     //add the document reference path to the user's "created" events
                                     if(newuser){
+                                        Map<String, Object> newUser = new HashMap<>();
+                                        newUser.put("eventCreated", true);
+                                        userReference.set(newUser);
                                         userReference.collection("events").document("created")
                                                 .set(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -302,9 +305,15 @@ public class AddEventActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                      newuser = false;
+                     try {
+                         boolean value = document.getBoolean("eventCreated");
+                     }
+                    catch (Exception e){
+                        newuser = true;
+                    }
                     }
 
     }
 
-}}); newuser = true;}
+}}); }
 }
