@@ -1,18 +1,17 @@
 package com.example.cluster;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class Event {
 
-    private String title, description, startTime, endTime, location, orgId, docPath;
+    private String title, description, startTime, endTime, location, creator, docPath;
     private int stars;
 
     public Event() {
     }
 
-    public Event(String title, String description, com.google.firebase.Timestamp startTime, com.google.firebase.Timestamp endTime, String location, String orgId, int stars, String docPath) {
+    public Event(String title, String description, com.google.firebase.Timestamp startTime, com.google.firebase.Timestamp endTime, String location, String creator, int stars, String docPath) {
         this.title = title;
         this.description = description;
 
@@ -20,7 +19,7 @@ public class Event {
         this.startTime = df.format(startTime.toDate());
         this.endTime = df.format(endTime.toDate());
         this.location = location;
-        this.orgId = orgId;
+        this.creator = creator;
         this.stars = stars;
         this.docPath = docPath;
     }
@@ -77,8 +76,8 @@ public class Event {
         stars--;
     }
 
-    public String getOrgId() {
-        return this.orgId;
+    public String getCreator() {
+        return this.creator;
     }
 
     public String getDocPath() {

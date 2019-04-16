@@ -61,7 +61,7 @@ public class InspectEventActivity extends AppCompatActivity {
                             doc.getTimestamp("Start"),
                             doc.getTimestamp("End"),
                             doc.getString("Loc"),
-                            doc.getDocumentReference("orgId").toString(),
+                            doc.getString("creator"),
                             doc.getLong("stars").intValue(),
                             doc.getReference().getPath());
 
@@ -70,7 +70,7 @@ public class InspectEventActivity extends AppCompatActivity {
                     endTime.setText(e.getEndTime());
                     location.setText(e.getLocation());
                     description.setText(e.getDescription());
-                    organizer.setText(e.getOrgId());
+                    organizer.setText(e.getCreator());
                     stars.setText(Integer.toString(e.getStars()));
                 } else {
                     // if we can't load the data boot the user back to the screen they came from
