@@ -4,24 +4,23 @@ import android.support.v7.widget.RecyclerView;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
         import java.util.List;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ManagedViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
     //this is going to be specifically for managed events I guess? Because we need to add an edit button to these but not to events on other activities
     private static final int MAX_TITLE_LEN = 35;
     private static final int MAX_DESC_LEN = 35;
     private static ClickListener cl;
 
-    private List<Event> managedEvents;
+    private List<Event> events;
 
-    public class ManagedViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public TextView title, startTime, description;
 
-        public ManagedViewHolder(View view) {
+        public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             description = (TextView) view.findViewById(R.id.description);
@@ -51,20 +50,20 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ManagedViewH
     }
 
     public EventAdapter(List<Event> eventList) {
-        this.managedEvents = eventList;
+        this.events = eventList;
     }
 
     @Override
-    public ManagedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.event_list_row, parent, false);
 
-        return new ManagedViewHolder(itemView);
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ManagedViewHolder holder, int position) {
-        Event e = managedEvents.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Event e = events.get(position);
         String dispTitle, dispDesc, dispStart;
 
         dispTitle = e.getTitle();
@@ -85,6 +84,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ManagedViewH
 
     @Override
     public int getItemCount() {
-        return managedEvents.size();
+        return events.size();
     }
 }
