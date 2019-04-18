@@ -301,20 +301,18 @@ public class AddEventActivity extends AppCompatActivity {
         dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                String eventPath;
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                     newuser = false;
-                     try {
-                         boolean value = document.getBoolean("eventCreated");
-                     }
-                    catch (Exception e){
-                        newuser = true;
+                        newuser = false;
+                        try {
+                            boolean value = document.getBoolean("eventCreated");
+                        } catch (Exception e) {
+                            newuser = true;
+                        }
                     }
-                    }
-
+                }
+            }
+        });
     }
-
-}}); }
 }

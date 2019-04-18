@@ -80,17 +80,14 @@
             android:textAlignment="center"
             android:textColor="@color/title" />
 
-        <Button
+        <ImageButton
             android:id="@+id/interested"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccentDark"
             android:layout_marginTop="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/title_Interested"
-            android:textAlignment="center"
-            android:textColor="@color/title" />
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/btn_uninterested" />
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -84,7 +84,7 @@ public class InterestedFragment extends Fragment {
     }
 
     private void populateInterested() {
-        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("starred");
+        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("interested");
 
         dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
