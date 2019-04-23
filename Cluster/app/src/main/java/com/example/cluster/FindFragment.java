@@ -100,7 +100,7 @@ public class FindFragment extends Fragment {
                                 doc.getTimestamp("End"),
                                 doc.getString("Loc"),
                                 doc.getString("creator"),
-                                doc.getLong("stars").intValue(),
+                                0,
                                 doc.getReference().getPath());
                         eventList.add(e);
                         mAdapter.notifyDataSetChanged();

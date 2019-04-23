@@ -27,6 +27,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -245,7 +246,6 @@ public class AddEventActivity extends AppCompatActivity {
                     event.put("Start", tsStart);
                     event.put("End", tsEnd);
                     event.put("creator", auth.getUid()); //store id of event owner
-                    event.put("stars", 0);
 
                     // Add a new document with a generated ID
                     createdEvent.add(event)
@@ -271,7 +271,7 @@ public class AddEventActivity extends AppCompatActivity {
                                     else
                                     {
                                         userReference.collection("events").document("created")
-                                                .update(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                .set(createdEvent, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) { //New Task Upon Completion
                                                 Toast.makeText(AddEventActivity.this, "Event Created",
@@ -279,6 +279,9 @@ public class AddEventActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+                                    Map<String, Object> stars = new HashMap<>();
+                                    stars.put("stars", 0);
+                                    documentReference.collection("public").document("star").set(stars);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

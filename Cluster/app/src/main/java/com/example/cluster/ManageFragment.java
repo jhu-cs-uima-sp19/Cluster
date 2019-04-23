@@ -113,7 +113,7 @@ public class ManageFragment extends Fragment {
                                                 doc.getTimestamp("End"),
                                                 doc.getString("Loc"),
                                                 doc.getString("creator"),
-                                                doc.getLong("stars").intValue(),
+                                                0,
                                                 doc.getReference().getPath());
                                         managedEventList.add(e);
                                         mAdapter.notifyDataSetChanged();
@@ -136,5 +136,12 @@ public class ManageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        add.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        add.hide();
     }
 }

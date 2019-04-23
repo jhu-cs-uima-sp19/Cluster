@@ -59,27 +59,38 @@ public class InspectEventActivity extends AppCompatActivity {
             finish();
         }
 
-        db.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        // first we get the stars info and save that in the stars textview
+        // thus we can access it outside of the task
+        // then on the task completion we get the other fields
+        db.document(docPath + "/public/star").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    e = new Event(doc.getString("Title"),
-                            doc.getString("Desc"),
-                            doc.getTimestamp("Start"),
-                            doc.getTimestamp("End"),
-                            doc.getString("Loc"),
-                            doc.getString("creator"),
-                            doc.getLong("stars").intValue(),
-                            doc.getReference().getPath());
+                    stars.setText(doc.getLong("stars").toString());
+                    db.document(docPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot doc = task.getResult();
+                                e = new Event(doc.getString("Title"),
+                                        doc.getString("Desc"),
+                                        doc.getTimestamp("Start"),
+                                        doc.getTimestamp("End"),
+                                        doc.getString("Loc"),
+                                        doc.getString("creator"),
+                                        Integer.parseInt(stars.getText().toString()),
+                                        doc.getReference().getPath());
 
-                    title.setText(e.getTitle());
-                    startTime.setText(e.getStartTime());
-                    endTime.setText(e.getEndTime());
-                    location.setText(e.getLocation());
-                    description.setText(e.getDescription());
-                    organizer.setText(e.getCreator());
-                    stars.setText(Integer.toString(e.getStars()));
+                                title.setText(e.getTitle());
+                                startTime.setText(e.getStartTime());
+                                endTime.setText(e.getEndTime());
+                                location.setText(e.getLocation());
+                                description.setText(e.getDescription());
+                                organizer.setText(e.getCreator());
+                            }
+                        }
+                    });
                 } else {
                     // if we can't load the data boot the user back to the screen they came from
                     Log.d(TAG, "get failed with ", task.getException());
@@ -127,6 +138,9 @@ public class InspectEventActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) { //change button to star
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_interested));
+                                    e.star();
+                                    db.document(docPath + "/public/star").update("stars", e.getStars());
+                                    stars.setText(Integer.toString(e.getStars()));
                                 }
                             });
                             // case 2, user exists and does have the doc id in their interested doc
@@ -137,6 +151,9 @@ public class InspectEventActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_uninterested));
+                                    e.unStar();
+                                    db.document(docPath + "/public/star").update("stars", e.getStars());
+                                    stars.setText(Integer.toString(e.getStars()));
                                 }
                             });
                         }
