@@ -1,11 +1,14 @@
 package com.example.cluster;
 
+import com.google.firebase.Timestamp;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class Event {
+public class Event implements Comparable {
 
     private String title, description, startTime, endTime, location, creator, docPath;
+    private Timestamp startTS;
     private int stars;
 
     public Event() {
@@ -17,6 +20,7 @@ public class Event {
 
         DateFormat df = new SimpleDateFormat("MM/dd HH:mm");
         this.startTime = df.format(startTime.toDate());
+        this.startTS = startTime;
         this.endTime = df.format(endTime.toDate());
         this.location = location;
         this.creator = creator;
@@ -82,5 +86,14 @@ public class Event {
 
     public String getDocPath() {
         return this.docPath;
+    }
+
+    public Timestamp getStartTS() {
+        return this.startTS;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getStartTS().compareTo(((Event)o).getStartTS());
     }
 }

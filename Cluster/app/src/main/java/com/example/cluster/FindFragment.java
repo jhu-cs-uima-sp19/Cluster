@@ -89,7 +89,7 @@ public class FindFragment extends Fragment {
 
     private void populate() {
         CollectionReference cr = db.collection("events/country/example-country");
-        cr.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        cr.orderBy("Start").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
