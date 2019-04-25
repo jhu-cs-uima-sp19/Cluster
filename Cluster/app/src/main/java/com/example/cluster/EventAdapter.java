@@ -9,6 +9,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements Filterable{
@@ -94,6 +95,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     public void eventFullAdd(Event e) {
         eventsFull.add(e);
+    }
+
+    public void eventFullSort() {
+        Collections.sort(eventsFull);
     }
 
     @Override
