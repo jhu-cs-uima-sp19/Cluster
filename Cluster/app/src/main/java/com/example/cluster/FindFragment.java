@@ -8,8 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -81,10 +85,33 @@ public class FindFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        setHasOptionsMenu(true);
+
         populate();
         return v;
         // Inflate the layout for this fragment
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        // Do something that differs the Activity's menu here
+        MenuItem searchItem = menu.findItem(R.id.search_button);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                mAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        super.onCreateOptionsMenu(menu, menuInflater);
     }
 
     private void populate() {
@@ -103,6 +130,7 @@ public class FindFragment extends Fragment {
                                 0,
                                 doc.getReference().getPath());
                         eventList.add(e);
+                        mAdapter.eventFullAdd(e);
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {

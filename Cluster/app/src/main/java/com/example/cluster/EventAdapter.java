@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements Filterable{
 
     //this is going to be specifically for managed events I guess? Because we need to add an edit button to these but not to events on other activities
     private static final int MAX_TITLE_LEN = 25;
@@ -21,7 +21,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     private List<Event> events;
     private List<Event> eventsFull;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, Filterable {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public TextView title, startTime, description;
 
         public ViewHolder(View view) {
@@ -41,11 +41,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         public boolean onLongClick(View view) {
             if (cl != null) cl.onItemLongClick(getAdapterPosition(), view);
             return false;
-        }
-
-        @Override
-        public Filter getFilter() {
-            return exampleFilter;
         }
     }
 
@@ -95,6 +90,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return events.size();
+    }
+
+    public void eventFullAdd(Event e) {
+        eventsFull.add(e);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
     }
 
     private Filter exampleFilter = new Filter() {

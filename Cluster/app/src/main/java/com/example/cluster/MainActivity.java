@@ -90,21 +90,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.search_button);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-//                adapter.getFilter().filter(s);
-                return false;
-            }
-        });
         return true;
     }
 
