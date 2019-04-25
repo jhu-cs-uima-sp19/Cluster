@@ -4,9 +4,12 @@ import android.support.v7.widget.RecyclerView;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
@@ -16,8 +19,9 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     private static ClickListener cl;
 
     private List<Event> events;
+    private List<Event> eventsFull;
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener, Filterable {
         public TextView title, startTime, description;
 
         public ViewHolder(View view) {
@@ -38,6 +42,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             if (cl != null) cl.onItemLongClick(getAdapterPosition(), view);
             return false;
         }
+
+        @Override
+        public Filter getFilter() {
+            return exampleFilter;
+        }
     }
 
     public void setClickListener(ClickListener cl) {
@@ -51,6 +60,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     public EventAdapter(List<Event> eventList) {
         this.events = eventList;
+        eventsFull = new ArrayList<>(events);
     }
 
     @Override
@@ -86,4 +96,36 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public int getItemCount() {
         return events.size();
     }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Event> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0) {
+                filteredList.addAll(eventsFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Event e : eventsFull) {
+                    // Get the element of the event we want to be filtered on
+                    if (e.getTitle().toLowerCase().contains(filterPattern)) { // Could also do starwith instead of contains
+                        filteredList.add(e);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results){
+            events.clear();
+            events.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
