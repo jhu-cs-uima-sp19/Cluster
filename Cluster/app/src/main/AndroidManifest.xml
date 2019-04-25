@@ -14,9 +14,11 @@
         <activity android:name=".AddEventActivity" />
         <activity
             android:name=".HomeActivity"
+            android:theme="@style/noAnimTheme"
             android:label="@string/app_name" />
         <activity
             android:name=".MainActivity"
+            android:theme="@style/noAnimTheme"
             android:label="@string/app_name" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ResetPasswordActivity" />
