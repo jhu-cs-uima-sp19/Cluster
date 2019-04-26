@@ -36,7 +36,7 @@ public class ManageFragment extends Fragment {
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db;
     FirebaseAuth auth;
-    private List<Event> managedEventList = new ArrayList<>();
+    private List<Event> managedEventList;
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
 
@@ -54,6 +54,8 @@ public class ManageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_manage, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
+        managedEventList = new ArrayList<>();
+
         add = (FloatingActionButton) v.findViewById(R.id.fab_add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,15 +70,13 @@ public class ManageFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 Event e = managedEventList.get(position);
-                startActivity(new Intent(getActivity(), InspectEventActivity.class)
+                startActivity(new Intent(getActivity(), EditEventActivity.class)
                         .putExtra("docPath", e.getDocPath())
                 );
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
-                Event e = managedEventList.get(position);
-                e.star();
             }
         });
 
@@ -92,7 +92,6 @@ public class ManageFragment extends Fragment {
         // This allows us to override the onCreateOptionsMenu method below
         setHasOptionsMenu(true);
 
-        populateManaged();
         return v;
         // Inflate the layout for this fragment
 
@@ -169,12 +168,16 @@ public class ManageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(managedEventList.size() == 0) {
+            populateManaged();
+        }
         add.show();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        managedEventList.clear();
         add.hide();
     }
 }

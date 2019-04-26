@@ -91,16 +91,16 @@ public class AddEventActivity extends AppCompatActivity {
         // need to make sure these aren't null
         Calendar c = Calendar.getInstance();
         c.setTime(today);
-        startMinute = c.MINUTE;
-        endMinute = c.MINUTE;
-        startHour = c.HOUR_OF_DAY;
-        endHour = c.HOUR_OF_DAY;
-        startDay = c.DATE;
-        endDay = c.DATE;
-        startMonth = c.MONTH;
-        endMonth = c.MONTH;
-        startYear = c.YEAR;
-        endYear = c.YEAR;
+        startMinute = c.get(Calendar.MINUTE);
+        endMinute = c.get(Calendar.MINUTE);
+        startHour = c.get(Calendar.HOUR_OF_DAY);
+        endHour = c.get(Calendar.HOUR_OF_DAY);
+        startDay = c.get(Calendar.DATE);
+        endDay = c.get(Calendar.DATE);
+        startMonth = c.get(Calendar.MONTH);
+        endMonth = c.get(Calendar.MONTH);
+        startYear = c.get(Calendar.YEAR);
+        endYear = c.get(Calendar.YEAR);
 
         btnStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +113,7 @@ public class AddEventActivity extends AppCompatActivity {
                                 startHour = hourOfDay;
                                 startMinute = minutes;
                             }
-                        }, 0, 0, false);
+                        }, startHour, startMinute, false);
                 timePickerDialog.show();
             }
         });
@@ -129,7 +129,7 @@ public class AddEventActivity extends AppCompatActivity {
                                 endHour = hourOfDay;
                                 endMinute = minutes;
                             }
-                        }, 0, 0, false);
+                        }, endHour, endMinute, false);
                 timePickerDialog.show();
             }
         });
@@ -146,7 +146,7 @@ public class AddEventActivity extends AppCompatActivity {
                                 startMonth = month;
                                 startDay = dayOfMonth;
                             }
-                        }, 2019, 4, 0);
+                        }, startYear, startMonth, startDay);
                 datePickerDialog.show();
             }
         });
@@ -163,7 +163,7 @@ public class AddEventActivity extends AppCompatActivity {
                                 endMonth = month;
                                 endDay = dayOfMonth;
                             }
-                        }, 2019, 4, 0);
+                        }, endYear, endMonth, endDay);
                 datePickerDialog.show();
             }
         });
