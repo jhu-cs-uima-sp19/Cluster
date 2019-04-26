@@ -66,3 +66,8 @@ events/{country}/{eventId}/{userId}/
 
 
 **REMEMBER WHEN DELETING PARENT DIRECTORIES, SUB-DIRECTORIES AND STORAGE MUST ALSO BE MANUALLY DELETED AS WELL**
+
+
+## Firebase Functions
+Generates thumbnails for uploaded images
+> New Image Name: thumb_<old image name>
