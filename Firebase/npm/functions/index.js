@@ -47,10 +47,4 @@ spawn('convert', [tempFilePath, '-thumbnail', '200x200>', tempFilePath]).then(fu
     })
 
 });})
-
-// We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-
-// Uploading the thumbnail.
-// Once the thumbnail has been uploaded delete the local file to free up disk space.
-
 });
