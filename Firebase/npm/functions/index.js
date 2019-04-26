@@ -16,7 +16,7 @@ const fs = require('fs');
 
 
 //either new file added or file deleted triggers change
-exports.onFileChange = functions.storage.object().onFinalize(event =>{ 
+exports.onFileChange = functions.storage.object().onFinalize(async event =>{ 
     console.log('Something happened to a file!')
 
     const fileBucket = object.bucket; // The Storage bucket that contains the file.
@@ -35,11 +35,8 @@ exports.onFileChange = functions.storage.object().onFinalize(event =>{
 
   if (fileName.startsWith('resized_')) {
     return console.log('Already resized.');
-  }
-
-  const destBucket = gcs.bucket(bucket)
-  const tmpFilePath = path.join(os.tmpdir(), path.basename(filePath))
-  const metadata = { contentType: contentType }
+  
+}
 
   // Download file from bucket.
 const bucket = admin.storage().bucket(fileBucket);
