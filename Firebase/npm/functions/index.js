@@ -39,18 +39,14 @@ spawn('convert', [tempFilePath, '-thumbnail', '200x200>', tempFilePath]).then(fu
     console.log('Thumbnail created at', tempFilePath);
     const thumbFileName = `thumb_${fileName}`;
     const thumbFilePath = path.join(path.dirname(filePath), thumbFileName);
-
-
-}.then(function(){
-
     bucket.upload(tempFilePath, {
         destination: thumbFilePath,
-        metadata: metadata,
-      });
+        metadata: metadata
+      }).then(function(){
+        return fs.unlinkSync(tempFilePath);
+    })
 
-}.then(function(){
-    return fs.unlinkSync(tempFilePath);
-})));})
+});})
 
 // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
 
