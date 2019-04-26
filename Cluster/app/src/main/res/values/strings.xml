@@ -50,7 +50,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
 
-    <string name="missing_text_resource">Could not load event field from Firestore</string>
+    <string name="missing_text_resource"> </string>
     <string name="event_title">Title</string>
     <string name="set_start">Start time</string>
     <string name="set_end">End time</string>

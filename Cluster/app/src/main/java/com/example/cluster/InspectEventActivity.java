@@ -94,6 +94,9 @@ public class InspectEventActivity extends AppCompatActivity {
                 } else {
                     // if we can't load the data boot the user back to the screen they came from
                     Log.d(TAG, "get failed with ", task.getException());
+
+                    Toast.makeText(InspectEventActivity.this, "Failed to Load Event Data",
+                            Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

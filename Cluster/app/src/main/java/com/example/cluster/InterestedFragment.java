@@ -82,6 +82,7 @@ public class InterestedFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        // This allows us to override the onCreateOptionsMenu method below
         setHasOptionsMenu(true);
 
         populateInterested();
@@ -90,6 +91,7 @@ public class InterestedFragment extends Fragment {
 
     }
 
+    // This creates the search view which filters the recycler view through the adapter
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         // Do something that differs the Activity's menu here
