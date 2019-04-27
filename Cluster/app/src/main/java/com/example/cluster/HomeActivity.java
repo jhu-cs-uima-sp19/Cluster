@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
     FirebaseAuth auth;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -58,9 +57,13 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         }
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container_top, new HomeTopFragment()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container_bottom, new HomeBottomFragment()).commit();
     }
 
     @Override
