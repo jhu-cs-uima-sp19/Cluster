@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
         import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,12 +25,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public TextView title, startTime, description;
+        public ImageView image_view, image_view2;
 
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             description = (TextView) view.findViewById(R.id.description);
             startTime = (TextView) view.findViewById(R.id.start);
+            image_view = (ImageView) view.findViewById(R.id.imageView);
+            image_view2 = (ImageView) view.findViewById(R.id.imageView2);
             itemView.setOnClickListener(this);
         }
 
@@ -86,6 +90,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         // startTime will always be in a format we expect
         holder.startTime.setText(e.getStartTime());
+        holder.image_view.setImageResource(R.drawable.spacedog);
+        holder.image_view2.setImageResource(R.drawable.ic_interested);
     }
 
     @Override
