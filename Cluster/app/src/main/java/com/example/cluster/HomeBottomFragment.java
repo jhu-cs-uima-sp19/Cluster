@@ -43,7 +43,7 @@ public class HomeBottomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_manage, container, false);
+        View v = inflater.inflate(R.layout.activity_fragment_home_bottom, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         mAdapter = new EventAdapter(eventList);

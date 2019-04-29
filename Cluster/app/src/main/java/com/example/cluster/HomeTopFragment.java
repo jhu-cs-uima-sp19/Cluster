@@ -3,6 +3,7 @@ package com.example.cluster;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,21 +21,24 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
 public class HomeTopFragment extends Fragment {
 
-    // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db;
     FirebaseAuth auth;
-    private List<Event> eventList = new ArrayList<>();
+    private List<Event> managedEventList;
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
 
@@ -47,27 +51,28 @@ public class HomeTopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_manage, container, false);
+        View v = inflater.inflate(R.layout.activity_fragment_home_top, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        mAdapter = new EventAdapter(eventList);
+        managedEventList = new ArrayList<>();
+
+        mAdapter = new EventAdapter(managedEventList);
         // make sure clicking an event sends you to the inspect event activity
         mAdapter.setClickListener(new EventAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Event e = eventList.get(position);
-                startActivity(new Intent(getActivity(), InspectEventActivity.class)
+                Event e = managedEventList.get(position);
+                startActivity(new Intent(getActivity(), EditEventActivity.class)
                         .putExtra("docPath", e.getDocPath())
                 );
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
-                Event e = eventList.get(position);
-                e.star();
             }
         });
 
+        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -77,9 +82,8 @@ public class HomeTopFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         // This allows us to override the onCreateOptionsMenu method below
-//        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
 
-        populate();
         return v;
         // Inflate the layout for this fragment
 
@@ -107,27 +111,47 @@ public class HomeTopFragment extends Fragment {
 //        super.onCreateOptionsMenu(menu, menuInflater);
 //    }
 
-    private void populate() {
-        CollectionReference cr = db.collection("events/country/example-country");
-        cr.orderBy("Start").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void populateManaged() {
+        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("created");
+
+        dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String eventPath;
                 if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Event e = new Event(doc.getString("Title"),
-                                doc.getString("Desc"),
-                                doc.getTimestamp("Start"),
-                                doc.getTimestamp("End"),
-                                doc.getString("Loc"),
-                                doc.getString("creator"),
-                                0,
-                                doc.getReference().getPath());
-                        eventList.add(e);
-                        mAdapter.eventFullAdd(e);
-                        mAdapter.notifyDataSetChanged();
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        for (Map.Entry<String, Object> e : document.getData().entrySet()) {
+                            eventPath = document.getDocumentReference(e.getKey()).getPath();
+                            db.document(eventPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot doc = task.getResult();
+                                        Event e = new Event(doc.getString("Title"),
+                                                doc.getString("Desc"),
+                                                doc.getTimestamp("Start"),
+                                                doc.getTimestamp("End"),
+                                                doc.getString("Loc"),
+                                                doc.getString("creator"),
+                                                0,
+                                                doc.getReference().getPath());
+                                        managedEventList.add(e);
+                                        mAdapter.eventFullAdd(e);
+                                        mAdapter.eventFullSort();
+                                        Collections.sort(managedEventList);
+                                        mAdapter.notifyDataSetChanged();
+                                    } else {
+                                        Log.d(TAG, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        Log.d(TAG, "No such document");
                     }
                 } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
@@ -136,5 +160,14 @@ public class HomeTopFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(managedEventList.size() == 0) {
+            populateManaged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        managedEventList.clear();
     }
 }
