@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -86,6 +87,7 @@ public class EditEventActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
+
                     title.setText(doc.getString("Title"));
                     description.setText(doc.getString("Desc"));
                     tsStart = doc.getTimestamp("Start");
@@ -201,7 +203,19 @@ public class EditEventActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(EditEventActivity.this, "NOT YET IMPLEMENTED", Toast.LENGTH_SHORT);
+                                String eID = db.document(docPath).getId();
+                                //Remove the document from the events database
+                                //NOT DELETING SUBDOCUMENT, NOT SURE WHY, DELETE TESTS ARE FAILING IN THE DATABASE RULES SIMULATOR
+                                db.document(docPath +"/public/star").delete();
+                                db.document(docPath).delete();
+                                Log.d(TAG, "DELETED DOCUMENT AT " + docPath);
+
+                                //Remove the document from the user's created events list
+                                Map<String, Object> updates = new HashMap<>();
+                                updates.put(eID, FieldValue.delete());
+                                db.document("users/" + auth.getUid() + "/events/created").update(updates);
+
+                                finish();
                             }
                         })
                         .setNegativeButton(R.string.not_sure, null)

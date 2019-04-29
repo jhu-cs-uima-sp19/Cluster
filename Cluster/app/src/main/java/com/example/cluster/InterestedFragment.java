@@ -22,10 +22,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +45,7 @@ public class InterestedFragment extends Fragment {
     private List<Event> interestedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
+    String eID;
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -125,26 +128,34 @@ public class InterestedFragment extends Fragment {
                     if (document.exists()) {
                         for (Map.Entry<String, Object> e : document.getData().entrySet()) {
                             eventPath = document.getDocumentReference(e.getKey()).getPath();
+                            eID = e.getKey();
                             db.document(eventPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot doc = task.getResult();
-                                        Event e = new Event(doc.getString("Title"),
-                                                doc.getString("Desc"),
-                                                doc.getTimestamp("Start"),
-                                                doc.getTimestamp("End"),
-                                                doc.getString("Loc"),
-                                                doc.getString("creator"),
-                                                0,
-                                                doc.getReference().getPath());
-                                        interestedEventList.add(e);
-                                        mAdapter.eventFullAdd(e);
-                                        mAdapter.eventFullSort();
-                                        Collections.sort(interestedEventList);
-                                        mAdapter.notifyDataSetChanged();
+                                        if (doc.exists()) {
+                                            Event e = new Event(doc.getString("Title"),
+                                                    doc.getString("Desc"),
+                                                    doc.getTimestamp("Start"),
+                                                    doc.getTimestamp("End"),
+                                                    doc.getString("Loc"),
+                                                    doc.getString("creator"),
+                                                    0,
+                                                    doc.getReference().getPath());
+                                            interestedEventList.add(e);
+                                            mAdapter.eventFullAdd(e);
+                                            mAdapter.eventFullSort();
+                                            Collections.sort(interestedEventList);
+                                            mAdapter.notifyDataSetChanged();
+                                        } else {
+                                            // tries to find a removed event, remove event from list
+                                            Map<String, Object> updates = new HashMap<>();
+                                            updates.put(eID, FieldValue.delete());
+                                            db.document("users/" + auth.getUid() + "/events/interested").update(updates);
+                                        }
                                     } else {
-                                        Log.d(TAG, "get failed with ", task.getException());
+                                        Log.d(TAG, "Task failed with exception: ", task.getException());
                                     }
                                 }
                             });
