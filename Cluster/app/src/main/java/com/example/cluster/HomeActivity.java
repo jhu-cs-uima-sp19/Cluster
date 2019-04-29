@@ -17,6 +17,7 @@ public class HomeActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
 
+    // This takes us to the correct fragment in the MainActivity
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

@@ -1,6 +1,5 @@
 package com.example.cluster;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,7 +32,6 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -56,8 +54,8 @@ public class InterestedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_manage, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        View v = inflater.inflate(R.layout.fragment_interested, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_interested);
 
         mAdapter = new EventAdapter(interestedEventList);
         // make sure clicking an event sends you to the inspect event activity
