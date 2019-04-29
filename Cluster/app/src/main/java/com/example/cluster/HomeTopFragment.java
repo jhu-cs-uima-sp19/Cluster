@@ -43,7 +43,7 @@ public class HomeTopFragment extends Fragment {
     FirebaseAuth auth;
     private List<Event> interestedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private EventAdapter mAdapter;
+    private EventAdapter htadapter;
     String eID;
 
     public HomeTopFragment() {
@@ -57,9 +57,9 @@ public class HomeTopFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home_top, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_top);
 
-        mAdapter = new EventAdapter(interestedEventList);
+        htadapter = new EventAdapter(interestedEventList);
         // make sure clicking an event sends you to the inspect event activity
-        mAdapter.setClickListener(new EventAdapter.ClickListener() {
+        htadapter.setClickListener(new EventAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Event e = interestedEventList.get(position);
@@ -78,7 +78,7 @@ public class HomeTopFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(htadapter);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -117,10 +117,10 @@ public class HomeTopFragment extends Fragment {
                                                     0,
                                                     doc.getReference().getPath());
                                             interestedEventList.add(e);
-                                            mAdapter.eventFullAdd(e);
-                                            mAdapter.eventFullSort();
+                                            htadapter.eventFullAdd(e);
+                                            htadapter.eventFullSort();
                                             Collections.sort(interestedEventList);
-                                            mAdapter.notifyDataSetChanged();
+                                            htadapter.notifyDataSetChanged();
                                         } else {
                                             // tries to find a removed event, remove event from list
                                             Map<String, Object> updates = new HashMap<>();

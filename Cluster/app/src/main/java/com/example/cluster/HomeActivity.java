@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
+    private int start = 0;
 
     // This takes us to the correct fragment in the MainActivity
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -65,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
                 .add(R.id.fragment_container_top, new HomeTopFragment()).commit();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container_bottom, new HomeBottomFragment()).commit();
+        start = 1;
     }
 
     @Override
@@ -93,6 +95,19 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // This creates two new fragments with a new adapter and correct lists
+        if (start == 1) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_top, new HomeTopFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_bottom, new HomeBottomFragment()).commit();
+        }
     }
 
 }

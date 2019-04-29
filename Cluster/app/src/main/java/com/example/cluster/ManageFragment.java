@@ -57,6 +57,7 @@ public class ManageFragment extends Fragment {
         managedEventList = new ArrayList<>();
 
         add = (FloatingActionButton) v.findViewById(R.id.fab_add);
+        add.show();
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,13 +172,11 @@ public class ManageFragment extends Fragment {
         if(managedEventList.size() == 0) {
             populateManaged();
         }
-        add.show();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         managedEventList.clear();
-        add.hide();
     }
 }
