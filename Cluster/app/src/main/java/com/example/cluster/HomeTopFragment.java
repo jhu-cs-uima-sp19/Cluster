@@ -83,7 +83,7 @@ public class HomeTopFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        populateInterested();
+//        populateInterested();
         return v;
         // Inflate the layout for this fragment
 
@@ -146,5 +146,14 @@ public class HomeTopFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(interestedEventList.size() == 0) {
+            populateInterested();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        interestedEventList.clear();
     }
 }
