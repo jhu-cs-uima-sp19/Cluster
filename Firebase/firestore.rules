@@ -7,24 +7,36 @@ service cloud.firestore {
       allow read, update, delete: if request.auth.uid == userId;
       allow create: if request.auth.uid != null;
     }
+    
+    // Make sure a user can get the events they've created to populate the manage tab with them
+    match /users/{userId}/events/created {
+    	allow read, create, update, delete: if request.auth.uid == userId;
+    }
+    
+    // Make sure a user can get the events they've starred to populate the interested tab with them
+    match /users/{userId}/events/interested {
+    	allow read, create, update, delete: if request.auth.uid == userId;
+    }
   
 		//events----------------
      match /events/country/{countryVal}/{eventVal} {
       allow read, create: if request.auth.uid != null;
       	//allow updating if uid is creator and creator does not change
-      allow update, delete: if request.auth.uid == request.resource.data.creator && request.resource.data.creator == resource.data.creator;
+      allow update: if request.auth.uid == request.resource.data.creator && request.resource.data.creator == resource.data.creator;
+    	allow delete: if request.auth.uid == request.resource.data.creator;
     }
     
     //starred events----------------
-     match /events/country/{contryVal}/{eventVal}/public/star {
+     match /events/country/{countryVal}/{eventVal}/public/star {
       allow read, create, update: if request.auth.uid != null;
       	//allow deleting if uid is creator
-      allow delete: if request.auth.uid == starGetCreator(countryVal, eventVal);
+      //allow delete: if request.auth.uid == starGetCreator(countryVal, eventVal);
+      allow delete: if request.auth.uid!= null;
     }
   }
   
   //get owner of event parent directory
   function starGetCreator (countryVal, eventVal) {
-  	return get(/databases/$(database)/documents/events/country/countryVal/eventVal/.data.creator)
+  	return get(/databases/$(database)/documents/events/country/countryVal/eventVal/.data.creator);
   }
 }
