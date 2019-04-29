@@ -23,12 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,43 +38,43 @@ import static android.content.ContentValues.TAG;
 
 public class HomeTopFragment extends Fragment {
 
+    // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db;
     FirebaseAuth auth;
-    private List<Event> managedEventList;
+    private List<Event> interestedEventList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter mAdapter;
-
-//    private OnFragmentInteractionListener mListener;
+    String eID;
 
     public HomeTopFragment() {
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_fragment_home_top, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        View v = inflater.inflate(R.layout.fragment_home_top, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_top);
 
-        managedEventList = new ArrayList<>();
-
-        mAdapter = new EventAdapter(managedEventList);
+        mAdapter = new EventAdapter(interestedEventList);
         // make sure clicking an event sends you to the inspect event activity
         mAdapter.setClickListener(new EventAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Event e = managedEventList.get(position);
-                startActivity(new Intent(getActivity(), EditEventActivity.class)
+                Event e = interestedEventList.get(position);
+                startActivity(new Intent(getActivity(), InspectEventActivity.class)
                         .putExtra("docPath", e.getDocPath())
                 );
             }
 
             @Override
             public void onItemLongClick(int position, View v) {
+                Event e = interestedEventList.get(position);
+                e.star();
             }
         });
 
-        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -81,38 +83,14 @@ public class HomeTopFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // This allows us to override the onCreateOptionsMenu method below
-        setHasOptionsMenu(true);
-
+        populateInterested();
         return v;
         // Inflate the layout for this fragment
 
     }
 
-    // This creates the search view which filters the recycler view through the adapter
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-//        // Do something that differs the Activity's menu here
-//        MenuItem searchItem = menu.findItem(R.id.search_button);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                mAdapter.getFilter().filter(s);
-//                return false;
-//            }
-//        });
-//
-//        super.onCreateOptionsMenu(menu, menuInflater);
-//    }
-
-    private void populateManaged() {
-        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("created");
+    private void populateInterested() {
+        DocumentReference dr = db.collection("users/" + auth.getUid() + "/events").document("interested");
 
         dr.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -123,26 +101,34 @@ public class HomeTopFragment extends Fragment {
                     if (document.exists()) {
                         for (Map.Entry<String, Object> e : document.getData().entrySet()) {
                             eventPath = document.getDocumentReference(e.getKey()).getPath();
+                            eID = e.getKey();
                             db.document(eventPath).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot doc = task.getResult();
-                                        Event e = new Event(doc.getString("Title"),
-                                                doc.getString("Desc"),
-                                                doc.getTimestamp("Start"),
-                                                doc.getTimestamp("End"),
-                                                doc.getString("Loc"),
-                                                doc.getString("creator"),
-                                                0,
-                                                doc.getReference().getPath());
-                                        managedEventList.add(e);
-                                        mAdapter.eventFullAdd(e);
-                                        mAdapter.eventFullSort();
-                                        Collections.sort(managedEventList);
-                                        mAdapter.notifyDataSetChanged();
+                                        if (doc.exists()) {
+                                            Event e = new Event(doc.getString("Title"),
+                                                    doc.getString("Desc"),
+                                                    doc.getTimestamp("Start"),
+                                                    doc.getTimestamp("End"),
+                                                    doc.getString("Loc"),
+                                                    doc.getString("creator"),
+                                                    0,
+                                                    doc.getReference().getPath());
+                                            interestedEventList.add(e);
+                                            mAdapter.eventFullAdd(e);
+                                            mAdapter.eventFullSort();
+                                            Collections.sort(interestedEventList);
+                                            mAdapter.notifyDataSetChanged();
+                                        } else {
+                                            // tries to find a removed event, remove event from list
+                                            Map<String, Object> updates = new HashMap<>();
+                                            updates.put(eID, FieldValue.delete());
+                                            db.document("users/" + auth.getUid() + "/events/interested").update(updates);
+                                        }
                                     } else {
-                                        Log.d(TAG, "get failed with ", task.getException());
+                                        Log.d(TAG, "Task failed with exception: ", task.getException());
                                     }
                                 }
                             });
@@ -160,14 +146,5 @@ public class HomeTopFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(managedEventList.size() == 0) {
-            populateManaged();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        managedEventList.clear();
     }
 }

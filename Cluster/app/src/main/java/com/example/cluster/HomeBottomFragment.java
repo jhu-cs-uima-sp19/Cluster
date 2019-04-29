@@ -43,8 +43,8 @@ public class HomeBottomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_fragment_home_bottom, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        View v = inflater.inflate(R.layout.fragment_home_bottom, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_bottom);
 
         mAdapter = new EventAdapter(eventList);
         // make sure clicking an event sends you to the inspect event activity
@@ -72,36 +72,11 @@ public class HomeBottomFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        // This allows us to override the onCreateOptionsMenu method below
-//        setHasOptionsMenu(true);
-
         populate();
         return v;
         // Inflate the layout for this fragment
 
     }
-
-    // This creates the search view which filters the recycler view through the adapter
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-//        // Do something that differs the Activity's menu here
-//        MenuItem searchItem = menu.findItem(R.id.search_button);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String s) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String s) {
-//                mAdapter.getFilter().filter(s);
-//                return false;
-//            }
-//        });
-//
-//        super.onCreateOptionsMenu(menu, menuInflater);
-//    }
 
     private void populate() {
         CollectionReference cr = db.collection("events/country/example-country");
