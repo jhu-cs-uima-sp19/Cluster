@@ -82,12 +82,26 @@ public class InspectEventActivity extends AppCompatActivity {
                                         Integer.parseInt(stars.getText().toString()),
                                         doc.getReference().getPath());
 
+                                String infoDisplayBuilder;
                                 title.setText(e.getTitle());
-                                startTime.setText(e.getStartTime());
-                                endTime.setText(e.getEndTime());
-                                location.setText(e.getLocation());
-                                description.setText(e.getDescription());
-                                organizer.setText(e.getCreator());
+
+                                infoDisplayBuilder = getResources().getString(R.string.start_time) + e.getStartTime();
+                                startTime.setText(infoDisplayBuilder);
+
+                                infoDisplayBuilder = getResources().getString(R.string.end_time) + e.getEndTime();
+                                endTime.setText(infoDisplayBuilder);
+
+                                infoDisplayBuilder = getResources().getString(R.string.location) + e.getLocation();
+                                location.setText(infoDisplayBuilder);
+
+                                infoDisplayBuilder = getResources().getString(R.string.description) + e.getDescription();
+                                description.setText(infoDisplayBuilder);
+
+                                infoDisplayBuilder = getResources().getString(R.string.organizer) + e.getCreator();
+                                organizer.setText(infoDisplayBuilder);
+
+                                infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                stars.setText(infoDisplayBuilder);
                             }
                         }
                     });
@@ -143,7 +157,8 @@ public class InspectEventActivity extends AppCompatActivity {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_interested));
                                     e.star();
                                     db.document(docPath + "/public/star").update("stars", e.getStars());
-                                    stars.setText(Integer.toString(e.getStars()));
+                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                    stars.setText(infoDisplayBuilder);
                                 }
                             });
                             // case 2, user exists and does have the doc id in their interested doc
@@ -156,7 +171,8 @@ public class InspectEventActivity extends AppCompatActivity {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_uninterested));
                                     e.unStar();
                                     db.document(docPath + "/public/star").update("stars", e.getStars());
-                                    stars.setText(Integer.toString(e.getStars()));
+                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                    stars.setText(infoDisplayBuilder);
                                 }
                             });
                         }
