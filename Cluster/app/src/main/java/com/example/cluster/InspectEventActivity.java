@@ -182,6 +182,7 @@ public class InspectEventActivity extends AppCompatActivity {
             }
         });
     }
+    //get username of event creator
     private String getCreatorUserName(final String crUID) {
         db.collection("users").document(crUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -190,8 +191,9 @@ public class InspectEventActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         crUserName = doc.getString("userName");
-                        if (crUserName.equals("null"))
+                        if (crUserName == null) {
                             crUserName = crUID;
+                        }
                     } else {
                         Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
                                 Toast.LENGTH_SHORT).show();
@@ -199,8 +201,6 @@ public class InspectEventActivity extends AppCompatActivity {
                     }
                 }
             }
-
-            ;
         });
         return crUserName;
     }

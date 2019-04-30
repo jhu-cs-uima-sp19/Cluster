@@ -272,7 +272,7 @@ public class AddEventActivity extends AppCompatActivity {
                                     if(newuser){
                                         Map<String, Object> newUser = new HashMap<>();
                                         newUser.put("eventCreated", true);
-                                        userReference.set(newUser);
+                                        userReference.update(newUser);
                                         userReference.collection("events").document("created")
                                                 .set(createdEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -324,6 +324,7 @@ public class AddEventActivity extends AppCompatActivity {
                         newuser = false;
                         try {
                             boolean value = document.getBoolean("eventCreated");
+                            newuser = !value;
                         } catch (Exception e) {
                             newuser = true;
                         }
