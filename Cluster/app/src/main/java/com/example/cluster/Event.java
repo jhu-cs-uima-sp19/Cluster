@@ -18,7 +18,7 @@ public class Event implements Comparable {
         this.title = title;
         this.description = description;
 
-        DateFormat df = new SimpleDateFormat("MM/dd HH:mm");
+        DateFormat df = new SimpleDateFormat("MM/dd h:mm a");
         this.startTime = df.format(startTime.toDate());
         this.startTS = startTime;
         this.endTime = df.format(endTime.toDate());

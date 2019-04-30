@@ -14,6 +14,19 @@
     android:paddingTop="16dp">
 
     <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/title"
+        android:textSize="12sp" />
+
+    <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -40,16 +53,6 @@
         android:layout_toEndOf="@+id/imageView"
         android:textColor="@color/desc" />
 
-    <TextView
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:textColor="@color/title" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="91dp"
@@ -66,6 +69,7 @@
         android:layout_height="48dp"
         android:layout_below="@+id/start"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="23dp"
         app:srcCompat="@drawable/ic_interested" />
 

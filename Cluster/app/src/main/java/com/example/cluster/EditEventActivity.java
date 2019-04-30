@@ -40,7 +40,7 @@ import static android.content.ContentValues.TAG;
 public class EditEventActivity extends AppCompatActivity {
 
     private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    private static final DateFormat stf = new SimpleDateFormat("HH:mm");
+    private static final DateFormat stf = new SimpleDateFormat("h:mm a");
     private static final int MAX_TITLE = 50;
     private static final int MAX_LOC = 200;
     private static final int MAX_DESC = 1000;
@@ -135,7 +135,15 @@ public class EditEventActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                                btnStartTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                                if (hourOfDay >= 1 && hourOfDay < 12) {
+                                    btnStartTime.setText(String.format("%02d:%02d AM", hourOfDay, minutes));
+                                } else if (hourOfDay > 12) {
+                                    btnStartTime.setText(String.format("%02d:%02d PM", hourOfDay - 12, minutes));
+                                } else if (hourOfDay == 12) {
+                                    btnStartTime.setText(String.format("12:%02d PM", minutes));
+                                } else {
+                                    btnStartTime.setText(String.format("12:%02d AM", minutes));
+                                }
                                 startHour = hourOfDay;
                                 startMinute = minutes;
                             }
@@ -151,7 +159,15 @@ public class EditEventActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
-                                btnEndTime.setText(String.format("%02d:%02d", hourOfDay, minutes));
+                                if (hourOfDay >= 1 && hourOfDay < 12) {
+                                    btnEndTime.setText(String.format("%02d:%02d AM", hourOfDay, minutes));
+                                } else if (hourOfDay > 12) {
+                                    btnEndTime.setText(String.format("%02d:%02d PM", hourOfDay - 12, minutes));
+                                } else if (hourOfDay == 12) {
+                                    btnEndTime.setText(String.format("12:%02d PM", minutes));
+                                } else {
+                                    btnEndTime.setText(String.format("12:%02d AM", minutes));
+                                }
                                 endHour = hourOfDay;
                                 endMinute = minutes;
                             }
