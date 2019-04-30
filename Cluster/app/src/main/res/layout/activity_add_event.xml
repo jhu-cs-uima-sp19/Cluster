@@ -79,7 +79,8 @@
                 android:background="@android:color/transparent"
                 android:text="@string/set_start"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorAccentDark" />
+                android:textColor="@color/title"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_start_time"
@@ -90,7 +91,8 @@
                 android:background="@android:color/transparent"
                 android:text="@string/set_start"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorAccentDark" />
+                android:textColor="@color/title"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -108,7 +110,8 @@
                 android:background="@android:color/transparent"
                 android:text="@string/set_end"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorAccentDark" />
+                android:textColor="@color/title"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btn_end_time"
@@ -119,7 +122,8 @@
                 android:background="@android:color/transparent"
                 android:text="@string/set_end"
                 android:textAlignment="viewStart"
-                android:textColor="@color/colorAccentDark" />
+                android:textColor="@color/title"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

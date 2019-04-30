@@ -105,7 +105,7 @@ public class AddEventActivity extends AppCompatActivity {
         btnStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, R.style.DialogTheme,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -128,7 +128,7 @@ public class AddEventActivity extends AppCompatActivity {
         btnEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddEventActivity.this, R.style.DialogTheme,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -151,7 +151,7 @@ public class AddEventActivity extends AppCompatActivity {
         btnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this, R.style.DialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -168,7 +168,7 @@ public class AddEventActivity extends AppCompatActivity {
         btnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddEventActivity.this, R.style.DialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -185,7 +185,7 @@ public class AddEventActivity extends AppCompatActivity {
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(AddEventActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
+                new AlertDialog.Builder(AddEventActivity.this,  R.style.DialogTheme)
                         .setTitle(R.string.delete_event)
                         .setMessage(R.string.delete_event_confirm)
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {

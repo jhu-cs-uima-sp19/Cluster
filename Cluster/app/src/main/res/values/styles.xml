@@ -48,4 +48,10 @@
         <item name="colorControlActivated">@color/title</item>
         <item name="colorControlHighlight">@color/title</item>
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
 </resources>

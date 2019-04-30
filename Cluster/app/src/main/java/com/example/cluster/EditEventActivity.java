@@ -22,7 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -131,7 +130,7 @@ public class EditEventActivity extends AppCompatActivity {
         btnStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this, R.style.DialogTheme,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -155,7 +154,7 @@ public class EditEventActivity extends AppCompatActivity {
         btnEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(EditEventActivity.this, R.style.DialogTheme,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
@@ -179,7 +178,7 @@ public class EditEventActivity extends AppCompatActivity {
         btnStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(EditEventActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EditEventActivity.this, R.style.DialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -196,7 +195,7 @@ public class EditEventActivity extends AppCompatActivity {
         btnEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(EditEventActivity.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EditEventActivity.this, R.style.DialogTheme,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -213,7 +212,7 @@ public class EditEventActivity extends AppCompatActivity {
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(EditEventActivity.this, android.app.AlertDialog.THEME_TRADITIONAL)
+                new AlertDialog.Builder(EditEventActivity.this, R.style.DialogTheme)
                         .setTitle(R.string.delete_event)
                         .setMessage(R.string.delete_event_confirm)
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
