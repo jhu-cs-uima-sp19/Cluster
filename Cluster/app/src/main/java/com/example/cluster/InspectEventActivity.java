@@ -31,7 +31,7 @@ public class InspectEventActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore db;
     String docPath;
-    Event e;
+    Event thisEvent;
     TextView title, organizer, startTime, endTime, location, description, stars;
     ImageButton interested;
     String crUserName;
@@ -74,7 +74,7 @@ public class InspectEventActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot doc = task.getResult();
-                                e = new Event(doc.getString("Title"),
+                                thisEvent = new Event(doc.getString("Title"),
                                         doc.getString("Desc"),
                                         doc.getTimestamp("Start"),
                                         doc.getTimestamp("End"),
@@ -82,27 +82,26 @@ public class InspectEventActivity extends AppCompatActivity {
                                         doc.getString("creator"),
                                         Integer.parseInt(stars.getText().toString()),
                                         doc.getReference().getPath());
-
                                 String infoDisplayBuilder;
-                                title.setText(e.getTitle());
+                                title.setText(thisEvent.getTitle());
 
-                                infoDisplayBuilder = getResources().getString(R.string.start_time) + e.getStartTime();
+                                infoDisplayBuilder = getResources().getString(R.string.start_time) + thisEvent.getStartTime();
                                 startTime.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.end_time) + e.getEndTime();
+                                infoDisplayBuilder = getResources().getString(R.string.end_time) + thisEvent.getEndTime();
                                 endTime.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.location) + e.getLocation();
+                                infoDisplayBuilder = getResources().getString(R.string.location) + thisEvent.getLocation();
                                 location.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.description) + e.getDescription();
+                                infoDisplayBuilder = getResources().getString(R.string.description) + thisEvent.getDescription();
                                 description.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.organizer) + getCreatorUserName(e.getCreator());
-                                organizer.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
                                 stars.setText(infoDisplayBuilder);
+
+                                getCreatorUserName(thisEvent.getCreator());
                             }
                         }
                     });
@@ -156,9 +155,9 @@ public class InspectEventActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) { //change button to star
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_interested));
-                                    e.star();
-                                    db.document(docPath + "/public/star").update("stars", e.getStars());
-                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                    thisEvent.star(); //star event
+                                    db.document(docPath + "/public/star").update("stars", thisEvent.getStars());
+                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
                                     stars.setText(infoDisplayBuilder);
                                 }
                             });
@@ -170,9 +169,9 @@ public class InspectEventActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_uninterested));
-                                    e.unStar();
-                                    db.document(docPath + "/public/star").update("stars", e.getStars());
-                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
+                                    thisEvent.unStar();
+                                    db.document(docPath + "/public/star").update("stars", thisEvent.getStars());
+                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
                                     stars.setText(infoDisplayBuilder);
                                 }
                             });
@@ -183,25 +182,33 @@ public class InspectEventActivity extends AppCompatActivity {
         });
     }
     //get username of event creator
-    private String getCreatorUserName(final String crUID) {
+    private void getCreatorUserName(final String crUID) {
+
         db.collection("users").document(crUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         crUserName = doc.getString("userName");
-                        if (crUserName == null) {
+                    Log.d(TAG, "USERNAME Val " + crUserName);
+
+                    if (crUserName == null || crUserName.toLowerCase().equals("null")) {
                             crUserName = crUID;
                         }
+                        dispCreatorInfo();
+
                     } else {
                         Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
                                 Toast.LENGTH_SHORT).show();
                         crUserName = crUID;
+                        dispCreatorInfo();
                     }
                 }
-            }
         });
-        return crUserName;
+    }
+
+
+    private void dispCreatorInfo() {
+        organizer.setText(getResources().getString(R.string.organizer) + crUserName);
     }
 }
