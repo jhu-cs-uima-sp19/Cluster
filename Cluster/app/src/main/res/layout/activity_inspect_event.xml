@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:background="@color/colorAccent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.cluster.InspectEventActivity">
+    tools:context="com.example.cluster.com.appcentricity.cluster.InspectEventActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

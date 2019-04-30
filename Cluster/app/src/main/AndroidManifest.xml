@@ -3,30 +3,30 @@
     package="com.example.cluster">
 
     <application
-        android:name=".ApplicationClass"
+        android:name="com.appcentricity.cluster.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_square"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditEventActivity"></activity>
-        <activity android:name=".InspectEventActivity" />
-        <activity android:name=".AddEventActivity" />
+        <activity android:name="com.appcentricity.cluster.EditEventActivity"></activity>
+        <activity android:name="com.appcentricity.cluster.InspectEventActivity" />
+        <activity android:name="com.appcentricity.cluster.AddEventActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name="com.appcentricity.cluster.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/noAnimTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.appcentricity.cluster.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/noAnimTheme" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name="com.appcentricity.cluster.ProfileActivity" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name="com.appcentricity.cluster.ResetPasswordActivity"
             android:theme="@style/NoBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.appcentricity.cluster.LoginActivity"
             android:theme="@style/NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

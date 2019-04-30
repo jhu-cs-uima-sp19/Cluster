@@ -6,7 +6,7 @@
     android:layout_gravity="center"
     android:background="@color/colorAccent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.cluster.AddEventActivity">
+    tools:context="com.example.cluster.com.appcentricity.cluster.AddEventActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
