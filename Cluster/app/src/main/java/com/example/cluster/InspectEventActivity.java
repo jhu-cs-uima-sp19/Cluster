@@ -190,6 +190,8 @@ public class InspectEventActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         DocumentSnapshot doc = task.getResult();
                         crUserName = doc.getString("userName");
+                        if (crUserName.equals("Null"))
+                            crUserName = crUID;
                     } else {
                         Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
                                 Toast.LENGTH_SHORT).show();
