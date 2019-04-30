@@ -9,12 +9,12 @@ public class Event implements Comparable {
 
     private String title, description, startTime, endTime, location, creator, docPath;
     private Timestamp startTS;
-    private int stars;
+    private long stars;
 
     public Event() {
     }
 
-    public Event(String title, String description, com.google.firebase.Timestamp startTime, com.google.firebase.Timestamp endTime, String location, String creator, int stars, String docPath) {
+    public Event(String title, String description, com.google.firebase.Timestamp startTime, com.google.firebase.Timestamp endTime, String location, String creator, long stars, String docPath) {
         this.title = title;
         this.description = description;
 
@@ -68,7 +68,7 @@ public class Event implements Comparable {
         this.location = location;
     }
 
-    public int getStars() {
+    public long getStars() {
         return stars;
     }
 
@@ -96,4 +96,5 @@ public class Event implements Comparable {
     public int compareTo(Object o) {
         return this.getStartTS().compareTo(((Event)o).getStartTS());
     }
+    protected void setStars(long newStar){this.stars = newStar;}
 }

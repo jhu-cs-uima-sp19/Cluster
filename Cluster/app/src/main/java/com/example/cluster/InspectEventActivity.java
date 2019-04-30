@@ -2,6 +2,7 @@ package com.example.cluster;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +19,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
@@ -80,7 +83,7 @@ public class InspectEventActivity extends AppCompatActivity {
                                         doc.getTimestamp("End"),
                                         doc.getString("Loc"),
                                         doc.getString("creator"),
-                                        Integer.parseInt(stars.getText().toString()),
+                                        Long.parseLong(stars.getText().toString()),
                                         doc.getReference().getPath());
                                 String infoDisplayBuilder;
                                 title.setText(thisEvent.getTitle());
@@ -97,11 +100,12 @@ public class InspectEventActivity extends AppCompatActivity {
                                 infoDisplayBuilder = getResources().getString(R.string.description) + thisEvent.getDescription();
                                 description.setText(infoDisplayBuilder);
 
-
                                 infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
                                 stars.setText(infoDisplayBuilder);
 
                                 getCreatorUserName(thisEvent.getCreator());
+
+                                fireBaseListener(); //listen for changes on Server End and update stars accordingly
                             }
                         }
                     });
@@ -157,8 +161,7 @@ public class InspectEventActivity extends AppCompatActivity {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_interested));
                                     thisEvent.star(); //star event
                                     db.document(docPath + "/public/star").update("stars", thisEvent.getStars());
-                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
-                                    stars.setText(infoDisplayBuilder);
+
                                 }
                             });
                             // case 2, user exists and does have the doc id in their interested doc
@@ -207,8 +210,35 @@ public class InspectEventActivity extends AppCompatActivity {
         });
     }
 
+    public void fireBaseListener(){
+        final DocumentReference docRef = db.document(docPath + "/public/star");
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    thisEvent.setStars(snapshot.getLong("stars"));
+                    updateStarDisp();
+
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+    }
+
 
     private void dispCreatorInfo() {
         organizer.setText(getResources().getString(R.string.organizer) + crUserName);
+    }
+    private void updateStarDisp() {
+        String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
+        stars.setText(infoDisplayBuilder);
     }
 }

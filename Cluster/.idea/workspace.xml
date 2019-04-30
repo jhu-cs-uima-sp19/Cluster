@@ -19,6 +19,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cluster/InspectEventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cluster/InspectEventActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -134,13 +135,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3023" />
+          <entry key="java" value="3302" />
           <entry key="xml" value="339" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3023" />
+          <entry key="JAVA" value="3302" />
           <entry key="XML" value="339" />
         </counts>
       </usages-collector>
@@ -241,20 +242,22 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/InspectEventActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
+            <state relative-caret-position="442">
+              <caret line="107" column="115" selection-start-line="107" selection-start-column="115" selection-end-line="107" selection-end-column="115" />
               <folding>
-                <element signature="e#2952#4999#0" expanded="true" />
-                <element signature="e#3970#4015#0" expanded="true" />
-                <element signature="e#4161#4204#0" expanded="true" />
-                <element signature="e#4346#4389#0" expanded="true" />
-                <element signature="e#4533#4579#0" expanded="true" />
-                <element signature="e#4730#4770#0" expanded="true" />
-                <element signature="e#4998#4999#0" expanded="true" />
-                <element signature="e#8450#8490#0" expanded="true" />
-                <element signature="e#9894#10804#0" expanded="true" />
-                <element signature="e#10803#10804#0" expanded="true" />
-                <element signature="e#10885#10929#0" expanded="true" />
+                <element signature="e#3121#5422#0" expanded="true" />
+                <element signature="e#4153#4198#0" expanded="true" />
+                <element signature="e#4352#4395#0" expanded="true" />
+                <element signature="e#4545#4588#0" expanded="true" />
+                <element signature="e#4740#4786#0" expanded="true" />
+                <element signature="e#4944#4984#0" expanded="true" />
+                <element signature="e#5421#5422#0" expanded="true" />
+                <element signature="e#10179#11089#0" expanded="true" />
+                <element signature="e#11088#11089#0" expanded="true" />
+                <element signature="e#11250#11946#0" expanded="true" />
+                <element signature="e#11945#11946#0" expanded="true" />
+                <element signature="e#12020#12064#0" expanded="true" />
+                <element signature="e#12158#12198#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -307,8 +310,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="16" column="100" selection-start-line="16" selection-start-column="100" selection-end-line="16" selection-end-column="100" />
+            <state relative-caret-position="1037">
+              <caret line="98" column="63" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -317,7 +320,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/EditEventActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1598">
-              <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
+              <caret line="226" selection-start-line="226" selection-end-line="226" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -405,7 +408,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/HomeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/EventAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/event_list_row.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_event.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_event.xml" />
@@ -415,6 +417,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_inspect_event.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/AddEventActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cluster/InspectEventActivity.java" />
       </list>
     </option>
@@ -1009,7 +1012,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/EditEventActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1598">
-          <caret line="226" lean-forward="true" selection-start-line="226" selection-end-line="226" />
+          <caret line="226" selection-start-line="226" selection-end-line="226" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1018,27 +1021,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/Event.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="16" column="100" selection-start-line="16" selection-start-column="100" selection-end-line="16" selection-end-column="100" />
+        <state relative-caret-position="1037">
+          <caret line="98" column="63" selection-start-line="98" selection-start-column="63" selection-end-line="98" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cluster/InspectEventActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
+        <state relative-caret-position="442">
+          <caret line="107" column="115" selection-start-line="107" selection-start-column="115" selection-end-line="107" selection-end-column="115" />
           <folding>
-            <element signature="e#2952#4999#0" expanded="true" />
-            <element signature="e#3970#4015#0" expanded="true" />
-            <element signature="e#4161#4204#0" expanded="true" />
-            <element signature="e#4346#4389#0" expanded="true" />
-            <element signature="e#4533#4579#0" expanded="true" />
-            <element signature="e#4730#4770#0" expanded="true" />
-            <element signature="e#4998#4999#0" expanded="true" />
-            <element signature="e#8450#8490#0" expanded="true" />
-            <element signature="e#9894#10804#0" expanded="true" />
-            <element signature="e#10803#10804#0" expanded="true" />
-            <element signature="e#10885#10929#0" expanded="true" />
+            <element signature="e#3121#5422#0" expanded="true" />
+            <element signature="e#4153#4198#0" expanded="true" />
+            <element signature="e#4352#4395#0" expanded="true" />
+            <element signature="e#4545#4588#0" expanded="true" />
+            <element signature="e#4740#4786#0" expanded="true" />
+            <element signature="e#4944#4984#0" expanded="true" />
+            <element signature="e#5421#5422#0" expanded="true" />
+            <element signature="e#10179#11089#0" expanded="true" />
+            <element signature="e#11088#11089#0" expanded="true" />
+            <element signature="e#11250#11946#0" expanded="true" />
+            <element signature="e#11945#11946#0" expanded="true" />
+            <element signature="e#12020#12064#0" expanded="true" />
+            <element signature="e#12158#12198#0" expanded="true" />
           </folding>
         </state>
       </provider>
