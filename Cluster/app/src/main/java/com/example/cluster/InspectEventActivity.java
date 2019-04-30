@@ -105,7 +105,7 @@ public class InspectEventActivity extends AppCompatActivity {
 
                                 getCreatorUserName(thisEvent.getCreator());
 
-                                fireBaseListener(); //listen for changes on Server End and update stars accordingly
+                                StarListener(); //listen for changes on Server End and update stars accordingly
                             }
                         }
                     });
@@ -161,7 +161,8 @@ public class InspectEventActivity extends AppCompatActivity {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_interested));
                                     thisEvent.star(); //star event
                                     db.document(docPath + "/public/star").update("stars", thisEvent.getStars());
-
+                                    //String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
+                                    //stars.setText(infoDisplayBuilder);
                                 }
                             });
                             // case 2, user exists and does have the doc id in their interested doc
@@ -174,8 +175,8 @@ public class InspectEventActivity extends AppCompatActivity {
                                     interested.setImageDrawable(getResources().getDrawable(R.drawable.btn_uninterested));
                                     thisEvent.unStar();
                                     db.document(docPath + "/public/star").update("stars", thisEvent.getStars());
-                                    String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
-                                    stars.setText(infoDisplayBuilder);
+                                    //String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
+                                    //stars.setText(infoDisplayBuilder);
                                 }
                             });
                         }
@@ -184,6 +185,7 @@ public class InspectEventActivity extends AppCompatActivity {
             }
         });
     }
+
     //get username of event creator
     private void getCreatorUserName(final String crUID) {
 
@@ -191,26 +193,27 @@ public class InspectEventActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                        DocumentSnapshot doc = task.getResult();
-                        crUserName = doc.getString("userName");
+                    DocumentSnapshot doc = task.getResult();
+                    crUserName = doc.getString("userName");
                     Log.d(TAG, "USERNAME Val " + crUserName);
 
                     if (crUserName == null || crUserName.toLowerCase().equals("null")) {
-                            crUserName = crUID;
-                        }
-                        dispCreatorInfo();
-
-                    } else {
-                        Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
-                                Toast.LENGTH_SHORT).show();
                         crUserName = crUID;
-                        dispCreatorInfo();
                     }
+                    dispCreatorInfo();
+
+                } else {
+                    Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
+                            Toast.LENGTH_SHORT).show();
+                    crUserName = crUID;
+                    dispCreatorInfo();
                 }
+            }
         });
     }
 
-    public void fireBaseListener(){
+    //listens to backend database for changes and populates data on page REALTIME
+    public void StarListener() {
         final DocumentReference docRef = db.document(docPath + "/public/star");
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -237,6 +240,7 @@ public class InspectEventActivity extends AppCompatActivity {
     private void dispCreatorInfo() {
         organizer.setText(getResources().getString(R.string.organizer) + crUserName);
     }
+
     private void updateStarDisp() {
         String infoDisplayBuilder = getResources().getString(R.string.stars) + thisEvent.getStars();
         stars.setText(infoDisplayBuilder);
