@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = inputEmail.getText().toString().trim();
+                final String email = inputEmail.getText().toString().trim();
                 String password = inputPwd.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
@@ -147,9 +148,20 @@ public class LoginActivity extends AppCompatActivity {
                                     Map<String, Object> user = new HashMap<>();
                                     //user.put("email", inputEmail.getText().toString().trim());
 
+                                    String userName = createUserName(email); //generate username from email
+
+                                    //user display name and email not accessible by other users
+
                                     FirebaseUser User = FirebaseAuth.getInstance().getCurrentUser();
                                     User.updateEmail(inputEmail.getText().toString().trim());
 
+                                   /* UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(userName).build();
+                                    User.updateProfile(profileUpdates); */
+
+                                    //add username to database generated from login email
+                                    user.put("userName", userName);
+                                    db.collection("users").document(auth.getUid()).set(user);
 
                                     // Add a new document with ID = userID
                                     //db.collection("users").document(auth.getUid()).set(user);
@@ -160,6 +172,13 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    private String createUserName(String email) {
+        int i;
+        i = email.lastIndexOf('@');
+        String uName = email.substring(0,i);
+        return uName;
     }
 
     @Override

@@ -34,6 +34,7 @@ public class InspectEventActivity extends AppCompatActivity {
     Event e;
     TextView title, organizer, startTime, endTime, location, description, stars;
     ImageButton interested;
+    String crUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class InspectEventActivity extends AppCompatActivity {
                                 infoDisplayBuilder = getResources().getString(R.string.description) + e.getDescription();
                                 description.setText(infoDisplayBuilder);
 
-                                infoDisplayBuilder = getResources().getString(R.string.organizer) + e.getCreator();
+                                infoDisplayBuilder = getResources().getString(R.string.organizer) + getCreatorUserName(e.getCreator());
                                 organizer.setText(infoDisplayBuilder);
 
                                 infoDisplayBuilder = getResources().getString(R.string.stars) + e.getStars();
@@ -180,5 +181,25 @@ public class InspectEventActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+    private String getCreatorUserName(final String crUID) {
+        db.collection("users").document(crUID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        crUserName = doc.getString("userName");
+                    } else {
+                        Toast.makeText(InspectEventActivity.this, "Failed to Load Creator Username",
+                                Toast.LENGTH_SHORT).show();
+                        crUserName = crUID;
+                    }
+                }
+            }
+
+            ;
+        });
+        return crUserName;
     }
 }
