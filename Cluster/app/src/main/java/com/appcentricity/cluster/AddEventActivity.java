@@ -293,8 +293,9 @@ public class AddEventActivity extends AppCompatActivity {
                                             }
                                         });
                                     }
+                                    userReference.collection("events").document("interested").set(createdEvent, SetOptions.merge());
                                     Map<String, Object> stars = new HashMap<>();
-                                    stars.put("stars", 0);
+                                    stars.put("stars", 1);
                                     documentReference.collection("public").document("star").set(stars);
                                 }
                             })
