@@ -220,10 +220,8 @@ public class EditEventActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String eID = db.document(docPath).getId();
                                 //Remove the document from the events database
-                                //NOT DELETING SUBDOCUMENT, NOT SURE WHY, DELETE TESTS ARE FAILING IN THE DATABASE RULES SIMULATOR
                                 db.document(docPath +"/public/star").delete();
                                 db.document(docPath).delete();
-                                Log.d(TAG, "DELETED DOCUMENT AT " + docPath);
 
                                 //Remove the document from the user's created events list
                                 Map<String, Object> updates = new HashMap<>();

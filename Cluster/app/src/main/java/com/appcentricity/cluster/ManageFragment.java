@@ -19,13 +19,16 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -137,19 +140,35 @@ public class ManageFragment extends Fragment {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot doc = task.getResult();
-                                        Event e = new Event(doc.getString("Title"),
-                                                doc.getString("Desc"),
-                                                doc.getTimestamp("Start"),
-                                                doc.getTimestamp("End"),
-                                                doc.getString("Loc"),
-                                                doc.getString("creator"),
-                                                0,
-                                                doc.getReference().getPath());
-                                        managedEventList.add(e);
-                                        mAdapter.eventFullAdd(e);
-                                        mAdapter.eventFullSort();
-                                        Collections.sort(managedEventList);
-                                        mAdapter.notifyDataSetChanged();
+                                        // only load an event that hasn't expired
+                                        if (doc.getTimestamp("End").compareTo(Timestamp.now()) > 0) {
+                                            Event e = new Event(doc.getString("Title"),
+                                                    doc.getString("Desc"),
+                                                    doc.getTimestamp("Start"),
+                                                    doc.getTimestamp("End"),
+                                                    doc.getString("Loc"),
+                                                    doc.getString("creator"),
+                                                    0,
+                                                    doc.getReference().getPath());
+                                            managedEventList.add(e);
+                                            mAdapter.eventFullAdd(e);
+                                            mAdapter.eventFullSort();
+                                            Collections.sort(managedEventList);
+                                            mAdapter.notifyDataSetChanged();
+                                        // if it already expired remove it from managed list and delete it
+                                        } else {
+                                            String eID = doc.getId();
+                                            String docPath = doc.getReference().getPath();
+                                            // remove the document and subdocuments from database
+                                            db.document(docPath +"/public/star").delete();
+                                            db.document(docPath).delete();
+
+                                            //Remove the document from the user's created events list
+                                            Map<String, Object> updates = new HashMap<>();
+                                            updates.put(eID, FieldValue.delete());
+                                            db.document("users/" + auth.getUid() + "/events/created").update(updates);
+
+                                        }
                                     } else {
                                         Log.d(TAG, "get failed with ", task.getException());
                                     }

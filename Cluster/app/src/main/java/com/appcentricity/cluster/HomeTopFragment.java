@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -99,7 +100,7 @@ public class HomeTopFragment extends Fragment {
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
                                         DocumentSnapshot doc = task.getResult();
-                                        if (doc.exists()) {
+                                        if (doc.exists() && doc.getTimestamp("End").compareTo(Timestamp.now()) > 0)  {
                                             Event e = new Event(doc.getString("Title"),
                                                     doc.getString("Desc"),
                                                     doc.getTimestamp("Start"),
@@ -114,7 +115,7 @@ public class HomeTopFragment extends Fragment {
                                             Collections.sort(interestedEventList);
                                             htadapter.notifyDataSetChanged();
                                         } else {
-                                            // tries to find a removed event, remove event from list
+                                            // tries to find a removed or expired event, remove event from list
                                             Map<String, Object> updates = new HashMap<>();
                                             updates.put(eID, FieldValue.delete());
                                             db.document("users/" + auth.getUid() + "/events/interested").update(updates);

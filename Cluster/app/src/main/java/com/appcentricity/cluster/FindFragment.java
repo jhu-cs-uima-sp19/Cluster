@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -117,17 +118,20 @@ public class FindFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Event e = new Event(doc.getString("Title"),
-                                doc.getString("Desc"),
-                                doc.getTimestamp("Start"),
-                                doc.getTimestamp("End"),
-                                doc.getString("Loc"),
-                                doc.getString("creator"),
-                                0,
-                                doc.getReference().getPath());
-                        eventList.add(e);
-                        mAdapter.eventFullAdd(e);
-                        mAdapter.notifyDataSetChanged();
+                        // only show events that haven't expired
+                        if (doc.getTimestamp("End").compareTo(Timestamp.now()) > 0) {
+                            Event e = new Event(doc.getString("Title"),
+                                    doc.getString("Desc"),
+                                    doc.getTimestamp("Start"),
+                                    doc.getTimestamp("End"),
+                                    doc.getString("Loc"),
+                                    doc.getString("creator"),
+                                    0,
+                                    doc.getReference().getPath());
+                            eventList.add(e);
+                            mAdapter.eventFullAdd(e);
+                            mAdapter.notifyDataSetChanged();
+                        }
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
