@@ -347,8 +347,9 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         uploadText = (TextView) findViewById(R.id.profPicViewText);
-
-        profPic.setOnTouchListener(new View.OnTouchListener() { //on touch -- display options
+        //on touch -- display upload text
+        //TODO: Fade in/out text, use text with best image contrast
+        profPic.setOnTouchListener(new View.OnTouchListener() {
                                        @Override
                                        public boolean onTouch(View v, MotionEvent touchAction) {
                                            int touchType = touchAction.getAction();
@@ -366,12 +367,15 @@ public class ProfileActivity extends AppCompatActivity {
                                            return true;
                                        }
                                    }
-
         );
+    }
+
+    private void uploadProfPic() {
 
     }
 
-    //convert memory held byte array to image view for display
+
+        //convert memory held byte array to image view for display
     public static void byteArrayToImageView(ImageView view, byte[] data) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         view.setImageBitmap(bitmap);
