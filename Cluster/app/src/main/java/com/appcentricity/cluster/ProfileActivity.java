@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
+    private FirebaseStorage cloudStorage = FirebaseStorage.getInstance();
 
     private boolean pwdVisible = false;
     private boolean uNameVisible = false;
@@ -72,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot doc = task.getResult();
                 String disp_uname = getResources().getString(R.string.username_placeholder);
-                if(doc.contains("userName")) {
+                if (doc.contains("userName")) {
                     disp_uname += doc.get("userName");
                 } else {
                     disp_uname += auth.getUid();
@@ -99,6 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         uName.setVisibility(View.GONE);
         changeUNameConf.setVisibility(View.GONE);
 
+        //Change Password Button Listener
         btnChangePwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Change Password Confirmation Listener
         changePwdConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,14 +138,13 @@ public class ProfileActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (!task.isSuccessful()) {
                                         pwd.setError(getString(R.string.bad_pwd));
-                                    } else if(pwd.getText().toString().trim().equals(newPwd.getText().toString().trim())) {
+                                    } else if (pwd.getText().toString().trim().equals(newPwd.getText().toString().trim())) {
                                         newPwd.setError(getString(R.string.same_pwd));
                                     } else {
                                         new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
                                                 .setTitle(R.string.change_pwd_dialogue)
                                                 .setMessage(R.string.change_pwd_logout)
-                                                .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
-                                                {
+                                                .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         user.updatePassword(newPwd.getText().toString().trim())
@@ -173,6 +176,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+
+        //Change Username Listener
         btnChangeUName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +193,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Change Username Confirmation Listener
         changeUNameConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,14 +226,34 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Sign Out Button Listener
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
+                        .setTitle(R.string.sign_out_dialog)
+                        .setMessage(R.string.sign_out_confirm)
+                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                auth.signOut();
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                            }
+
+                        })
+                        .setNegativeButton(R.string.not_sure, null)
+                        .show();
+            }
+        });
+
+        //Delete Account Button Listener
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
                         .setTitle(R.string.delete_account)
                         .setMessage(R.string.delete_account_confirm)
-                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
-                        {
+                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (user != null) {
@@ -252,32 +278,14 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
-
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
-                        .setTitle(R.string.sign_out_dialog)
-                        .setMessage(R.string.sign_out_confirm)
-                        .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                auth.signOut();
-                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                            }
-
-                        })
-                        .setNegativeButton(R.string.not_sure, null)
-                        .show();
-            }
-        });
-
     }
+
+    
 
     @Override
     protected void onResume() {
-        super.onResume(); }
+        super.onResume();
+    }
 
     @Override
     public void onStart() {
