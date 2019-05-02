@@ -17,6 +17,49 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/profileImageLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center">
+
+
+            <ImageView
+                android:id="@+id/profPicView"
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:layout_marginBottom="10dip"
+                android:scaleType="fitCenter"
+                android:visibility="visible"
+                app:srcCompat="@drawable/spacedog" />
+
+            <TextView
+                android:id="@+id/profPicViewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/profPicView"
+                android:layout_alignTop="@id/profPicView"
+                android:layout_alignRight="@id/profPicView"
+                android:layout_alignBottom="@id/profPicView"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="78dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="-76dp"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:gravity="center"
+                android:text="Upload Profile Image"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+
+
+
         <TextView
             android:id="@+id/u_name_disp"
             android:layout_width="wrap_content"

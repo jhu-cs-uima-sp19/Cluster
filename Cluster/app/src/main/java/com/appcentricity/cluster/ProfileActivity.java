@@ -2,17 +2,24 @@ package com.appcentricity.cluster;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -23,10 +30,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -38,6 +45,11 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private FirebaseStorage cloudStorage = FirebaseStorage.getInstance();
+    private StorageReference profPicRef;
+    private boolean hasProfPic = false;
+    private ImageView profPic;
+    private TextView uploadText;
+
 
     private boolean pwdVisible = false;
     private boolean uNameVisible = false;
@@ -56,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //switch to login activity if logged out
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -69,6 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
         };
 
         uNameDisp = (TextView) findViewById(R.id.u_name_disp);
+
+        //fetch username if exists, fetch if user profile pic has been uploaded
         db.document("users/" + auth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -79,10 +94,18 @@ public class ProfileActivity extends AppCompatActivity {
                 } else {
                     disp_uname += auth.getUid();
                 }
+                //look for profpic boolean
+                if (doc.contains("hasProfPic")) {
+                    hasProfPic = doc.getBoolean("hasProfPic");
+                }
+                else
+                {
+                    hasProfPic = false;
+                }
                 uNameDisp.setText(disp_uname);
+                fetchProfPic();
             }
         });
-
         btnChangePwd = (Button) findViewById(R.id.btn_change_pwd);
         btnChangeUName = (Button) findViewById(R.id.btn_change_uName);
         changePwdConf = (Button) findViewById(R.id.btn_change_pwd_confirm);
@@ -275,12 +298,84 @@ public class ProfileActivity extends AppCompatActivity {
                         })
                         .setNegativeButton(R.string.not_sure, null)
                         .show();
-
             }
         });
     }
 
-    
+    //fetchProfPic if exists, else set default image
+    private void fetchProfPic() {
+        profPic = findViewById(R.id.profPicView);
+        if (hasProfPic){
+            profPicRef = cloudStorage.getReference("users").child("thumb_"+auth.getUid());
+
+            final long ONE_MEGABYTE = 1024 * 1024;
+            profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] profPicBytes) {
+                    byteArrayToImageView(profPic, profPicBytes);
+                }
+            }).addOnFailureListener(new OnFailureListener() { //failure to get compressed profile image
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.w("ProfileActivity", "Failed to get compressed pic -- getting original instead");
+                    profPicRef = cloudStorage.getReference("users").child("auth.getUid()");
+                    final long ONE_MEGABYTE = 1024 * 1024;
+                    profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] profPicBytes) {
+                            byteArrayToImageView(profPic, profPicBytes);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() { //failure to get original profile image
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Log.w("ProfileActivity", "Failed to get uncompressed pic -- using default instead");
+
+                            int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
+                            profPic.setImageResource(defProfPic); //if fail to get compressed or original profile image
+                        }
+                    });
+
+                }
+            });
+        }
+        else
+        {
+            //default profpic image
+            int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
+            profPic.setImageResource(defProfPic);
+        }
+
+
+        uploadText = (TextView) findViewById(R.id.profPicViewText);
+
+        profPic.setOnTouchListener(new View.OnTouchListener() { //on touch -- display options
+                                       @Override
+                                       public boolean onTouch(View v, MotionEvent touchAction) {
+                                           int touchType = touchAction.getAction();
+                                           switch (touchType) {
+                                               case MotionEvent.ACTION_DOWN:
+                                                   uploadText.setVisibility(View.VISIBLE);
+                                                   break;
+                                               case MotionEvent.ACTION_UP:
+                                                   uploadText.setVisibility((View.INVISIBLE));
+                                                   break;
+                                               default:
+                                                   break;
+                                           }
+                                           Log.d("ProfileActivity", "onTouch: Profile Image TextView");
+                                           return true;
+                                       }
+                                   }
+
+        );
+
+    }
+
+    //convert memory held byte array to image view for display
+    public static void byteArrayToImageView(ImageView view, byte[] data) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        view.setImageBitmap(bitmap);
+    }
 
     @Override
     protected void onResume() {
