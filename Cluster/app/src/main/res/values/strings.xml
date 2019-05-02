@@ -26,16 +26,21 @@
     <string name="reset_pwd_fail">Failed to send email link. Does that account exist?</string>
     <string name="reset_pwd_success">Email sent!</string>
 
+    <string name="username_placeholder">Username:\u0020</string>
     <string name="change_pwd">Change Password</string>
+    <string name="change_uname">Change Username</string>
     <string name="change_pwd_confirm">Confirm</string>
     <string name="old_pwd_hint">Old password</string>
     <string name="new_pwd_hint">New password</string>
+    <string name="new_uname_hint">New username</string>
     <string name="pwd_update_success">Password successfully updated, logging out…</string>
     <string name="pwd_update_fail">Failed to update password</string>
     <string name="bad_pwd">Bad password</string>
+    <string name="bad_uname">Empty input</string>
     <string name="same_pwd">New password must be different</string>
     <string name="change_pwd_dialogue">Change password</string>
     <string name="change_pwd_logout">Are you sure you want to change your password? This will log you out.</string>
+    <string name="change_uname_msg">This will change your display name to all other users. Proceed?</string>
 
     <string name="sign_out">SIGN OUT</string>
     <string name="sign_out_dialog">Sign Out</string>

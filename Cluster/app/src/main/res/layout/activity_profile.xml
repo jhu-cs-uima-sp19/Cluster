@@ -17,6 +17,54 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
+        <TextView
+            android:id="@+id/u_name_disp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username_placeholder"
+            android:textAlignment="textStart"
+            android:textColor="@color/title"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_change_uName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorAccentDark"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:text="@string/change_uname"
+            android:textColor="@android:color/white" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/newUName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:hint="@string/new_uname_hint"
+                android:inputType="text"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_change_uname_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorAccentDark"
+            android:text="@string/change_pwd_confirm"
+            android:textColor="@android:color/white" />
+
         <Button
             android:id="@+id/btn_change_pwd"
             android:layout_width="wrap_content"
