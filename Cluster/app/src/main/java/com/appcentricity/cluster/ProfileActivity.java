@@ -2,10 +2,12 @@ package com.appcentricity.cluster;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +39,8 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -413,7 +417,29 @@ public class ProfileActivity extends AppCompatActivity {
                 {
                     e.printStackTrace();
                 }*/
-                    uploadProfPic();
+
+                    //get file size
+                    final ParcelFileDescriptor parcelFileDescriptor;
+                    try {
+                        parcelFileDescriptor = getContentResolver().openFileDescriptor(
+                                profPicPath, "r");
+                        int profPicSize = (int)parcelFileDescriptor.getStatSize()/1024/1024;
+                        Log.d("ProfileActivity", "IMAGE SIZE REPORTED "+profPicSize);
+                        if(profPicSize <= 8) {
+                            uploadProfPic();
+                        }
+                        else
+                        {
+                            Toast.makeText(ProfileActivity.this, "Upload Failed: "+profPicSize+"MB > 5 MB Maximum Size", Toast.LENGTH_SHORT).show();
+
+                        }
+                    } catch (FileNotFoundException e) {
+                        Log.w("ProfileActivity", "Unable to retrieve image size");
+                        Toast.makeText(ProfileActivity.this, "Upload Failed: Unable to Determine Image Size", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                       //uploadProfPic();
+
+                    }
                 }
             }
 
@@ -422,7 +448,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void uploadProfPic() {
 
         if (profPicPath != null) {
-            profPicRef = cloudStorage.getReference("users").child("_thumb" + auth.getUid());
+            String image = "thumb_".concat(auth.getUid());
+            profPicRef = cloudStorage.getReference("users").child(image);
             profPicRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
