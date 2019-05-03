@@ -13,6 +13,7 @@ Cluster is an app that helps people schedule and gauge interest for local events
 - Matt Chodaczek
 
 ## Sample Accounts for Grading:
+- testing@testing.com, Password
 - grader1@cluster.com, password123
 - grader2@cluster.com, sample_password1
 - grader3@cluster.com, iamsotired27
