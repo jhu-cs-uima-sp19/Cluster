@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +33,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,10 +55,11 @@ public class ProfileActivity extends AppCompatActivity {
     private boolean hasProfPic = false;
     private ImageView profPic;
     private TextView uploadText;
-
-
+    private Uri profPicPath;
     private boolean pwdVisible = false;
     private boolean uNameVisible = false;
+    private ProgressBar uploadProgress;
+    boolean outsideTouch = false;
 
     private final int MIN_PWD_LEN = 6;
 
@@ -305,8 +312,8 @@ public class ProfileActivity extends AppCompatActivity {
     //fetchProfPic if exists, else set default image
     private void fetchProfPic() {
         profPic = findViewById(R.id.profPicView);
-        if (hasProfPic){
-            profPicRef = cloudStorage.getReference("users").child("thumb_"+auth.getUid());
+        if (hasProfPic) {
+            profPicRef = cloudStorage.getReference("users").child("thumb_" + auth.getUid());
 
             final long ONE_MEGABYTE = 1024 * 1024;
             profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -337,28 +344,30 @@ public class ProfileActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        else
-        {
+        } else {
             //default profpic image
             int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
             profPic.setImageResource(defProfPic);
         }
 
-
         uploadText = (TextView) findViewById(R.id.profPicViewText);
         //on touch -- display upload text
         //TODO: Fade in/out text, use text with best image contrast
         profPic.setOnTouchListener(new View.OnTouchListener() {
-                                       @Override
+                                      @Override
                                        public boolean onTouch(View v, MotionEvent touchAction) {
                                            int touchType = touchAction.getAction();
                                            switch (touchType) {
                                                case MotionEvent.ACTION_DOWN:
+                                                   outsideTouch = false;
                                                    uploadText.setVisibility(View.VISIBLE);
                                                    break;
                                                case MotionEvent.ACTION_UP:
                                                    uploadText.setVisibility((View.INVISIBLE));
+                                                   if (profPic.hasFocus()) //Has Finger moved off image?
+                                                   {
+                                                       profPic.callOnClick();
+                                                   }
                                                    break;
                                                default:
                                                    break;
@@ -368,10 +377,98 @@ public class ProfileActivity extends AppCompatActivity {
                                        }
                                    }
         );
-    }
 
+        //New Intent -- Browse Image
+        profPic.setOnClickListener(new View.OnClickListener() {
+            final int PICK_IMAGE_REQUEST = 71;
+
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+
+
+            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                ProfileActivity.super.onActivityResult(requestCode, resultCode, data);
+                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                        && data != null && data.getData() != null) {
+                    profPicPath = data.getData();
+               /* try {
+                    //TODO: DISPLAY IMAGE WITH CONFIRMATION FIRST
+                    //Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profPicPath);
+
+                    uploadProfPic();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }*/
+                    uploadProfPic();
+                }
+            }
+        });
+    }
+    //upload new profile image
     private void uploadProfPic() {
 
+        if(profPicPath != null)
+        {
+            profPicRef = cloudStorage.getReference("users").child("_thumb"+auth.getUid());
+            profPicRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("ProfileActivity", "Old Compressed ProfPic Deleted Successfully");
+                    // File deleted successfully
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+
+                                            }
+            });
+            profPicRef = cloudStorage.getReference("users").child(auth.getUid()); //delete original
+            profPicRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("ProfileActivity", "Old ProfPic Deleted Successfully");
+                    // File deleted successfully
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+
+                }
+            });
+            uploadProgress = (ProgressBar) findViewById(R.id.uploadProgress); //instantiate progress bar
+
+            profPicRef.putFile(profPicPath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            uploadProgress.setProgress(100);
+                            Toast.makeText(ProfileActivity.this, "Upload Complete", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            uploadProgress.setProgress(0);
+                            Toast.makeText(ProfileActivity.this, "Upload Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() { //update progress bar
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            int progress = (int) Math.round(100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            uploadProgress.setProgress(progress);
+                        }
+                    });
+        }
     }
 
 
