@@ -60,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
     private boolean uNameVisible = false;
     private ProgressBar uploadProgress;
     boolean outsideTouch = false;
+    final int PICK_IMAGE_REQUEST = 71;
 
     private final int MIN_PWD_LEN = 6;
 
@@ -354,7 +355,7 @@ public class ProfileActivity extends AppCompatActivity {
         //on touch -- display upload text
         //TODO: Fade in/out text, use text with best image contrast
         profPic.setOnTouchListener(new View.OnTouchListener() {
-                                      @Override
+            @Override
                                        public boolean onTouch(View v, MotionEvent touchAction) {
                                            int touchType = touchAction.getAction();
                                            switch (touchType) {
@@ -380,19 +381,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         //New Intent -- Browse Image
         profPic.setOnClickListener(new View.OnClickListener() {
-            final int PICK_IMAGE_REQUEST = 71;
 
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                getNewProfPic();
             }
 
 
-            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        });
+    }
+    public void getNewProfPic() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                 ProfileActivity.super.onActivityResult(requestCode, resultCode, data);
                 if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                         && data != null && data.getData() != null) {
@@ -410,8 +416,8 @@ public class ProfileActivity extends AppCompatActivity {
                     uploadProfPic();
                 }
             }
-        });
-    }
+
+
     //upload new profile image
     private void uploadProfPic() {
 
