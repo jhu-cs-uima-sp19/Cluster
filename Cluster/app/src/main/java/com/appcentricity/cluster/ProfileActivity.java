@@ -330,7 +330,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     Log.w("ProfileActivity", "Failed to get compressed pic -- getting original instead");
-                    profPicRef = cloudStorage.getReference("users").child("auth.getUid()");
+                    profPicRef = cloudStorage.getReference("users").child(auth.getUid());
                     final long ONE_MEGABYTE = 1024 * 1024;
                     profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
