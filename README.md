@@ -1,4 +1,7 @@
 # Cluster
+Cluster is an app that helps people schedule and gauge interest for local events they organize and plan. It also allows users to browse through and search events to discover what they're interested in. Cluster runs on Google Firebase's Firestore database.
+
+Work on first and second sprint tasks can be found in the projects tab.
 
 ## Firebase Documentation:
 [See documentation here](Firebase/README.md)

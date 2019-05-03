@@ -171,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     } else if (pwd.getText().toString().trim().equals(newPwd.getText().toString().trim())) {
                                         newPwd.setError(getString(R.string.same_pwd));
                                     } else {
-                                        new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
+                                        new AlertDialog.Builder(ProfileActivity.this, R.style.DialogTheme)
                                                 .setTitle(R.string.change_pwd_dialogue)
                                                 .setMessage(R.string.change_pwd_logout)
                                                 .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
@@ -232,7 +232,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (input.length() == 0) {
                     uName.setError(getString(R.string.bad_uname));
                 } else {
-                    new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
+                    new AlertDialog.Builder(ProfileActivity.this, R.style.DialogTheme)
                             .setTitle(R.string.change_uname)
                             .setMessage(R.string.change_uname_msg)
                             .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
@@ -260,7 +260,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
+                new AlertDialog.Builder(ProfileActivity.this, R.style.DialogTheme)
                         .setTitle(R.string.sign_out_dialog)
                         .setMessage(R.string.sign_out_confirm)
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
@@ -280,7 +280,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(ProfileActivity.this, R.style.AlertDialogTheme)
+                new AlertDialog.Builder(ProfileActivity.this, R.style.DialogTheme)
                         .setTitle(R.string.delete_account)
                         .setMessage(R.string.delete_account_confirm)
                         .setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
