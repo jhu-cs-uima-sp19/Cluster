@@ -7,7 +7,7 @@
 users/{example-user}   
 > stores basic user info
     
-users/{example-user}/events/{starred}
+users/{example-user}/events/{interested}
 > references to events user has starred
     - must have way of checking if event was deleted
     
