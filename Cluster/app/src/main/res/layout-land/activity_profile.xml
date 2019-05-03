@@ -18,9 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:gravity="center"
-            android:padding="@dimen/activity_horizontal_margin" >
+            android:paddingTop="10dp" >
 
             <RelativeLayout
                 android:id="@+id/profileImageLayout"
@@ -56,7 +56,7 @@
                     android:text="Upload Profile Image"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     android:visibility="invisible" />
 
@@ -83,8 +83,8 @@
                 <Button
                     android:id="@+id/btn_change_uName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dip"
                     android:background="@color/colorAccentDark"
                     android:paddingLeft="10dip"
                     android:paddingRight="10dip"
@@ -94,8 +94,8 @@
                 <Button
                     android:id="@+id/btn_change_pwd"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dip"
                     android:background="@color/colorAccentDark"
                     android:paddingLeft="10dip"
                     android:paddingRight="10dip"
@@ -105,8 +105,8 @@
                 <Button
                     android:id="@+id/btn_sign_out"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="10dip"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dip"
                     android:background="@color/colorAccentDark"
                     android:text="@string/sign_out"
                     android:textColor="@android:color/white" />
@@ -114,8 +114,8 @@
                 <Button
                     android:id="@+id/btn_delete_account"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dip"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dip"
                     android:background="@null"
                     android:text="@string/delete_account"
                     android:textAllCaps="false"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|top"
                 android:orientation="vertical"
-                android:padding="@dimen/activity_horizontal_margin">
+                android:paddingHorizontal="@dimen/activity_horizontal_margin">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -153,7 +153,6 @@
                         android:id="@+id/newUName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:hint="@string/new_uname_hint"
                         android:inputType="text"
@@ -167,7 +166,8 @@
                     android:id="@+id/btn_change_uname_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginBottom="5dip"
                     android:background="@color/colorAccentDark"
                     android:text="@string/change_pwd_confirm"
                     android:textColor="@android:color/white"
@@ -182,7 +182,6 @@
                         android:id="@+id/pwd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:hint="@string/old_pwd_hint"
                         android:inputType="textPassword"
                         android:textColor="@android:color/white"
@@ -199,7 +198,7 @@
                         android:id="@+id/newPwd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="1"
                         android:hint="@string/new_pwd_hint"
                         android:inputType="textPassword"
@@ -212,7 +211,7 @@
                     android:id="@+id/btn_change_pwd_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/colorAccentDark"
                     android:text="@string/change_pwd_confirm"
                     android:textColor="@android:color/white"
