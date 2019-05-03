@@ -432,6 +432,8 @@ public class ProfileActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
+                    Log.w("ProfileActivity", "Old Compressed ProfPic Failed to Delete");
+
 
                 }
             });

@@ -6,19 +6,20 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Upload Fail" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="warn" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="old" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6658a1e0-e406-41dc-8f97-f63a4270bdd3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -136,7 +137,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gradle" value="34" />
-          <entry key="java" value="7159" />
+          <entry key="java" value="7184" />
           <entry key="txt" value="82" />
           <entry key="xml" value="418" />
         </counts>
@@ -144,7 +145,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="34" />
-          <entry key="JAVA" value="7159" />
+          <entry key="JAVA" value="7184" />
           <entry key="PLAIN_TEXT" value="82" />
           <entry key="XML" value="418" />
         </counts>
@@ -228,11 +229,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="404" column="46" selection-start-line="404" selection-start-column="39" selection-end-line="404" selection-end-column="46" />
+            <state relative-caret-position="368">
+              <caret line="437" column="17" lean-forward="true" selection-start-line="437" selection-start-column="17" selection-end-line="437" selection-end-column="17" />
               <folding>
+                <element signature="e#11235#11260#0" expanded="true" />
+                <element signature="e#12986#13355#0" expanded="true" />
+                <element signature="e#13354#13355#0" expanded="true" />
                 <element signature="e#19421#19574#0" expanded="true" />
                 <element signature="e#19573#19574#0" expanded="true" />
+                <element signature="e#20885#21168#0" expanded="true" />
+                <element signature="e#21167#21168#0" expanded="true" />
+                <element signature="e#21191#21439#0" expanded="true" />
                 <element signature="e#23650#24135#0" expanded="true" />
                 <element signature="e#24134#24135#0" expanded="true" />
                 <element signature="e#24453#24454#0" expanded="true" />
@@ -246,7 +253,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
             </state>
           </provider>
           <provider editor-type-id="android-manifest" />
@@ -481,7 +488,7 @@
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="device.picker.selection" value="Pixel_XL_API_28" />
+    <property name="device.picker.selection" value="ce071717c224c8f80c7e" />
     <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Documents/1 Johns Hopkins/0 UI &amp; Mobile Apps/Assignments/cluster-keystore.jks" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
@@ -597,7 +604,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1633" height="1093" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4977064" visible="true" weight="0.19619048" />
       <window_info id="Structure" order="1" side_tool="true" />
@@ -947,18 +953,24 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
         </state>
       </provider>
       <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="404" column="46" selection-start-line="404" selection-start-column="39" selection-end-line="404" selection-end-column="46" />
+        <state relative-caret-position="368">
+          <caret line="437" column="17" lean-forward="true" selection-start-line="437" selection-start-column="17" selection-end-line="437" selection-end-column="17" />
           <folding>
+            <element signature="e#11235#11260#0" expanded="true" />
+            <element signature="e#12986#13355#0" expanded="true" />
+            <element signature="e#13354#13355#0" expanded="true" />
             <element signature="e#19421#19574#0" expanded="true" />
             <element signature="e#19573#19574#0" expanded="true" />
+            <element signature="e#20885#21168#0" expanded="true" />
+            <element signature="e#21167#21168#0" expanded="true" />
+            <element signature="e#21191#21439#0" expanded="true" />
             <element signature="e#23650#24135#0" expanded="true" />
             <element signature="e#24134#24135#0" expanded="true" />
             <element signature="e#24453#24454#0" expanded="true" />

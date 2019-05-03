@@ -5,8 +5,10 @@ service firebase.storage {
       allow read: if request.auth.uid != null;
       // Only the user can upload their own profile picture
       // Profile picture must be of content-type "image/*"
-      allow write: if request.auth.uid == userId && request.resource.contentType.matches('image/.+');
-    }
+      allow write: if ((request.auth.uid == userId || "thumb_" + request.auth.uid == userId) && request.resource.contentType.matches('image/.+'));
+  		allow delete: if request.auth.uid == userId || "thumb_" + request.auth.uid == userId;
+  }
+     
     match /events/{country}/{eventId}/{userId}/{file} { 
     	//any file in the event folder
       // Anyone can read
