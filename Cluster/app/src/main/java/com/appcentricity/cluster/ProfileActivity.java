@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView uNameDisp;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
-    private FirebaseFirestore db;
+    private FirebaseFirestore database;
     private FirebaseStorage cloudStorage = FirebaseStorage.getInstance();
     private StorageReference profPicRef;
     private boolean hasProfPic = false;
@@ -70,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        database = FirebaseFirestore.getInstance();
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
         uNameDisp = (TextView) findViewById(R.id.u_name_disp);
 
         //fetch username if exists, fetch if user profile pic has been uploaded
-        db.document("users/" + auth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        database.document("users/" + auth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot doc = task.getResult();
@@ -241,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     String newUserName = uName.getText().toString();
                                     Map<String, Object> updateUserName = new HashMap<>();
                                     updateUserName.put("userName", newUserName);
-                                    db.document("users/" + auth.getUid()).set(updateUserName, SetOptions.merge());
+                                    database.document("users/" + auth.getUid()).set(updateUserName, SetOptions.merge());
                                     String updatedDispUserName = getResources().getString(R.string.username_placeholder) + input;
                                     uNameDisp.setText(updatedDispUserName);
                                     uName.setText("");
@@ -364,7 +364,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                    break;
                                                case MotionEvent.ACTION_UP:
                                                    uploadText.setVisibility((View.INVISIBLE));
-                                                   if (profPic.hasFocus()) //Has Finger moved off image?
+                                                   if (profPic.hasWindowFocus()) //Has Finger moved off image?
                                                    {
                                                        profPic.callOnClick();
                                                    }
