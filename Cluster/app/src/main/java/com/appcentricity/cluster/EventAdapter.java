@@ -17,7 +17,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     //this is going to be specifically for managed events I guess? Because we need to add an edit button to these but not to events on other activities
     private static final int MAX_TITLE_LEN = 14;
-    private static final int MAX_DESC_LEN = 75;
+    private static final int MAX_DESC_LEN = 60;
     private static ClickListener cl;
 
     private List<Event> events;
