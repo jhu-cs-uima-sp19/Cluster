@@ -26,7 +26,7 @@
     <string name="reset_pwd_fail">Failed to send email link. Does that account exist?</string>
     <string name="reset_pwd_success">Email sent!</string>
 
-    <string name="username_placeholder">Display name:\u0020</string>
+    <string name="username_placeholder"></string>
     <string name="change_pwd">Change Password</string>
     <string name="change_uname">Change Display Name</string>
     <string name="change_pwd_confirm">Confirm</string>
