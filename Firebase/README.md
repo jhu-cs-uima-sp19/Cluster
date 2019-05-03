@@ -69,5 +69,5 @@ events/{country}/{eventId}/{userId}/
 
 
 ## Firebase Functions
-Generates thumbnails for uploaded images
+Generates compressed thumbnails for uploaded images for optimized image retrieval
 > New Image Name: thumb_<old image name>
