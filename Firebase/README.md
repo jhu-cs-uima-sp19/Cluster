@@ -22,7 +22,7 @@ users/{example-user}/events/{created}
 events/{country}/USA/{unique-event}
 - country document is named country
 - collection for each country 
-
+    
 **Event:**
 
 ../{unique event}
@@ -43,7 +43,9 @@ events/{country}/USA/{unique-event}
 > .userStar[]
 > - optional array of users that have starred the event
 
+**Features:**
 
+Real time update of stars without requiring refreshing of page
 
 
 ## Firebase Storage
