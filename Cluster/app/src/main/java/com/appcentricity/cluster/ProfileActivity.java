@@ -415,9 +415,8 @@ public class ProfileActivity extends AppCompatActivity {
     //upload new profile image
     private void uploadProfPic() {
 
-        if(profPicPath != null)
-        {
-            profPicRef = cloudStorage.getReference("users").child("_thumb"+auth.getUid());
+        if (profPicPath != null) {
+            profPicRef = cloudStorage.getReference("users").child("_thumb" + auth.getUid());
             profPicRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -425,10 +424,10 @@ public class ProfileActivity extends AppCompatActivity {
                     // File deleted successfully
                 }
             }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception exception) {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
 
-                                            }
+                }
             });
             profPicRef = cloudStorage.getReference("users").child(auth.getUid()); //delete original
             profPicRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -451,25 +450,36 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             uploadProgress.setProgress(100);
                             Toast.makeText(ProfileActivity.this, "Upload Complete", Toast.LENGTH_SHORT).show();
+
+                            //update profPic info in user profile
+                            Map<String, Object> picStatus = new HashMap<>();
+                            picStatus.put("hasProfPic", true);
+                            database.collection("users").document(auth.getUid()).update(picStatus);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             uploadProgress.setProgress(0);
-                            Toast.makeText(ProfileActivity.this, "Upload Failed: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileActivity.this, "Upload Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            //update profPic info in user profile
+                            Map<String, Object> picStatus = new HashMap<>();
+                            picStatus.put("hasProfPic", false);
+                            database.collection("users").document(auth.getUid()).update(picStatus);
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() { //update progress bar
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            int progress = (int) Math.round(100.0 * taskSnapshot.getBytesTransferred()/taskSnapshot
+                            int progress = (int) Math.round(100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
                             uploadProgress.setProgress(progress);
                         }
                     });
         }
     }
+
 
 
         //convert memory held byte array to image view for display
