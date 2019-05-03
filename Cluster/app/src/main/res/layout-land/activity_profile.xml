@@ -12,196 +12,214 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="top|left"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/profileImageLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin" >
+
+            <RelativeLayout
+                android:id="@+id/profileImageLayout"
+                android:layout_width="500dip"
+                android:layout_height="fill_parent"
+                android:gravity="center|left">
 
 
-            <ImageView
-                android:id="@+id/profPicView"
-                android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/profPicView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:clickable="true"
+                    android:cropToPadding="false"
+                    android:maxHeight="250dip"
+                    android:scaleType="centerCrop"
+
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/defaultuser" />
+
+                <TextView
+                    android:id="@+id/profPicViewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/profPicView"
+                    android:layout_alignTop="@+id/profPicView"
+                    android:layout_alignRight="@id/profPicView"
+                    android:layout_alignBottom="@id/profPicView"
+                    android:background="#A629434E"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:gravity="center"
+                    android:text="Upload Profile Image"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:clickable="true"
-                android:cropToPadding="false"
-                android:maxHeight="250dip"
-                android:scaleType="centerCrop"
-
-                android:visibility="visible"
-                app:srcCompat="@drawable/defaultuser" />
-
-            <TextView
-                android:id="@+id/profPicViewText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/profPicView"
-                android:layout_alignTop="@+id/profPicView"
-                android:layout_alignRight="@id/profPicView"
-                android:layout_alignBottom="@id/profPicView"
-                android:layout_marginStart="1dp"
-                android:layout_marginLeft="78dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="-76dp"
-                android:background="#A629434E"
-                android:fontFamily="sans-serif-condensed-medium"
+                android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:text="Upload Profile Image"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/u_name_disp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username_placeholder"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/title"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_change_uName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/colorAccentDark"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/change_uname"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_change_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/colorAccentDark"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:text="@string/change_pwd"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_sign_out"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/colorAccentDark"
+                    android:text="@string/sign_out"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_delete_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dip"
+                    android:background="@null"
+                    android:text="@string/delete_account"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/holo_red_dark" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/uploadProgress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
             android:visibility="visible" />
+
         <ScrollView
+            android:id="@+id/scroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/scroll">
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:layout_gravity="top">
 
-            <TextView
-                android:id="@+id/u_name_disp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/username_placeholder"
-                android:textAlignment="textStart"
-                android:textColor="@color/title"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center_horizontal|top"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
 
-            <Button
-                android:id="@+id/btn_change_uName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorAccentDark"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:text="@string/change_uname"
-                android:textColor="@android:color/white" />
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/newUName"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/newUName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:hint="@string/new_uname_hint"
+                        android:inputType="text"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        tools:visibility="gone" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_change_uname_confirm"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:hint="@string/new_uname_hint"
-                    android:inputType="text"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/colorAccentDark"
+                    android:text="@string/change_pwd_confirm"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    tools:visibility="gone" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/btn_change_uname_confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorAccentDark"
-                android:text="@string/change_pwd_confirm"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btn_change_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorAccentDark"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:text="@string/change_pwd"
-                android:textColor="@android:color/white" />
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/pwd"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:hint="@string/old_pwd_hint"
-                    android:inputType="textPassword"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    android:layout_height="match_parent"
+                    tools:visibility="gone">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/old_pwd_hint"
+                        android:inputType="textPassword"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/newPwd"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/newPwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:hint="@string/new_pwd_hint"
+                        android:inputType="textPassword"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/btn_change_pwd_confirm"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:hint="@string/new_pwd_hint"
-                    android:inputType="textPassword"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorAccentDark"
+                    android:text="@string/change_pwd_confirm"
                     android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white" />
+                    tools:visibility="gone" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/btn_change_pwd_confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorAccentDark"
-                android:text="@string/change_pwd_confirm"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btn_sign_out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@color/colorAccentDark"
-                android:text="@string/sign_out"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btn_delete_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:background="@null"
-                android:text="@string/delete_account"
-                android:textAllCaps="false"
-                android:textColor="@android:color/holo_red_dark" />
-
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
