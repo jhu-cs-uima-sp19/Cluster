@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -316,8 +317,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     //fetchProfPic if exists, else set default image
     private void fetchProfPic() {
+        fetchProfPic(hasProfPic);
+        }
+        private void fetchProfPic(boolean shouldFetch) {
         profPic = findViewById(R.id.profPicView);
-        if (hasProfPic) {
+        if (shouldFetch) {
             profPicRef = cloudStorage.getReference("users").child("thumb_" + auth.getUid());
 
             final long ONE_MEGABYTE = 1024 * 1024;
@@ -330,22 +334,56 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
                     Log.w("ProfileActivity", "Failed to get compressed pic -- getting original instead");
-                    profPicRef = cloudStorage.getReference("users").child(auth.getUid());
-                    final long ONE_MEGABYTE = 1024 * 1024;
-                    profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                        @Override
-                        public void onSuccess(byte[] profPicBytes) {
-                            byteArrayToImageView(profPic, profPicBytes);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() { //failure to get original profile image
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Log.w("ProfileActivity", "Failed to get uncompressed pic -- using default instead");
+                    try {
+                        final File localFile = File.createTempFile("images", "jpg");
+                        profPicRef = cloudStorage.getReference("users").child(auth.getUid());
+                        profPicRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                profPic.setImageBitmap(BitmapFactory.decodeFile(localFile.getAbsolutePath()));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Log.e("ProfileActivity", "Failed to get save local copy of uncompressed pic - using default instead");
 
-                            int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
-                            profPic.setImageResource(defProfPic); //if fail to get compressed or original profile image
-                        }
-                    });
+                                profPicRef = cloudStorage.getReference("users").child(auth.getUid());
+                                final long ONE_MEGABYTE = 1024 * 1024;
+                                profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] profPicBytes) {
+                                        byteArrayToImageView(profPic, profPicBytes);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() { //failure to get original profile image
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        Log.w("ProfileActivity", "Failed to get uncompressed pic -- using default instead");
+
+                                        int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
+                                        profPic.setImageResource(defProfPic); //if fail to get compressed or original profile image
+                                    }
+                                });
+
+                            }});
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        profPicRef = cloudStorage.getReference("users").child(auth.getUid());
+                        final long ONE_MEGABYTE = 1024 * 1024;
+                        profPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] profPicBytes) {
+                                byteArrayToImageView(profPic, profPicBytes);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() { //failure to get original profile image
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Log.w("ProfileActivity", "Failed to get uncompressed pic -- using default instead");
+
+                                int defProfPic = getResources().getIdentifier("defaultuser", "drawable", getPackageName());
+                                profPic.setImageResource(defProfPic); //if fail to get compressed or original profile image
+                            }
+                        });
+                    }
 
                 }
             });
@@ -490,6 +528,7 @@ public class ProfileActivity extends AppCompatActivity {
                             Map<String, Object> picStatus = new HashMap<>();
                             picStatus.put("hasProfPic", true);
                             database.collection("users").document(auth.getUid()).update(picStatus);
+                            fetchProfPic(true);
 
                         }
                     })
