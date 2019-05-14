@@ -169,8 +169,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+            <state relative-caret-position="136">
+              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -344,7 +344,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="width" value="2122" />
     <option name="height" value="2172" />
@@ -417,26 +417,6 @@
             </path>
             <path>
               <item name="Cluster" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
-            <path>
-              <item name="Cluster" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="Cluster" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="generatedJava" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="Cluster" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="Cluster" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
@@ -449,7 +429,6 @@
   <component name="PropertiesComponent">
     <property name="ExportApk.ApkPath" value="C:\Users\mason\Documents\GitHub\Cluster\Cluster\app" />
     <property name="ExportApk.BuildVariants" value="debug&#10;release" />
-    <property name="ExportApk.SignV2" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/MGC/Documents/GitHub/Cluster/Cluster/app/src/main/res/layout/fragment_manage.xml" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -585,14 +564,14 @@
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Resources Explorer" order="8" />
-      <window_info anchor="bottom" id="Logcat" order="0" sideWeight="0.495873" visible="true" weight="0.29491174" />
+      <window_info anchor="bottom" id="Logcat" order="0" sideWeight="0.495873" weight="0.29491174" />
       <window_info anchor="bottom" id="Run" order="1" weight="0.32624114" />
       <window_info anchor="bottom" id="Debug" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4995015" weight="0.3253138" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50412697" side_tool="true" visible="true" weight="0.29491174" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50412697" side_tool="true" visible="true" weight="0.14122534" />
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32978722" />
       <window_info anchor="bottom" id="Version Control" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49651048" weight="0.14225942" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.495873" visible="true" weight="0.14122534" />
       <window_info anchor="bottom" id="Find" order="8" sideWeight="0.4990476" weight="0.32848233" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="bottom" id="Mirror" order="10" />
@@ -954,8 +933,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+        <state relative-caret-position="136">
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
         </state>
       </provider>
     </entry>

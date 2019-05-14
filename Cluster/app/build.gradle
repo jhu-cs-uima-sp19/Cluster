@@ -6,7 +6,7 @@ android {
         applicationId "com.appcentricity.cluster"
         minSdkVersion 18
         targetSdkVersion 28
-        versionCode 7
+        versionCode 8
         versionName "7.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
