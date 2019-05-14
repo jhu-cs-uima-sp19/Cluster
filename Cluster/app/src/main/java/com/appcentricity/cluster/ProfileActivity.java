@@ -110,9 +110,7 @@ public class ProfileActivity extends AppCompatActivity {
                 //look for profpic boolean
                 if (doc.contains("hasProfPic")) {
                     hasProfPic = doc.getBoolean("hasProfPic");
-                }
-                else
-                {
+                } else {
                     hasProfPic = false;
                 }
                 uNameDisp.setText(disp_uname);
@@ -318,8 +316,9 @@ public class ProfileActivity extends AppCompatActivity {
     //fetchProfPic if exists, else set default image
     private void fetchProfPic() {
         fetchProfPic(hasProfPic);
-        }
-        private void fetchProfPic(boolean shouldFetch) {
+    }
+
+    private void fetchProfPic(boolean shouldFetch) {
         profPic = findViewById(R.id.profPicView);
         if (shouldFetch) {
             profPicRef = cloudStorage.getReference("users").child("thumb_" + auth.getUid());
@@ -364,7 +363,8 @@ public class ProfileActivity extends AppCompatActivity {
                                     }
                                 });
 
-                            }});
+                            }
+                        });
                     } catch (Exception e) {
                         e.printStackTrace();
                         profPicRef = cloudStorage.getReference("users").child(auth.getUid());
@@ -397,7 +397,7 @@ public class ProfileActivity extends AppCompatActivity {
         //on touch -- display upload text
         //TODO: Fade in/out text, use text with best image contrast
         profPic.setOnTouchListener(new View.OnTouchListener() {
-            @Override
+                                       @Override
                                        public boolean onTouch(View v, MotionEvent touchAction) {
                                            int touchType = touchAction.getAction();
                                            switch (touchType) {
@@ -433,6 +433,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
     }
+
     public void getNewProfPic() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -441,10 +442,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-                ProfileActivity.super.onActivityResult(requestCode, resultCode, data);
-                if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                        && data != null && data.getData() != null) {
-                    profPicPath = data.getData();
+        ProfileActivity.super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            profPicPath = data.getData();
                /* try {
                     //TODO: DISPLAY IMAGE WITH CONFIRMATION FIRST
                     //Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profPicPath);
@@ -456,30 +457,28 @@ public class ProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }*/
 
-                    //get file size
-                    final ParcelFileDescriptor parcelFileDescriptor;
-                    try {
-                        parcelFileDescriptor = getContentResolver().openFileDescriptor(
-                                profPicPath, "r");
-                        int profPicSize = (int)parcelFileDescriptor.getStatSize()/1024/1024;
-                        Log.d("ProfileActivity", "IMAGE SIZE REPORTED "+profPicSize);
-                        if(profPicSize <= 8) {
-                            uploadProfPic();
-                        }
-                        else
-                        {
-                            Toast.makeText(ProfileActivity.this, "Upload Failed: "+profPicSize+"MB > 5 MB Maximum Size", Toast.LENGTH_SHORT).show();
+            //get file size
+            final ParcelFileDescriptor parcelFileDescriptor;
+            try {
+                parcelFileDescriptor = getContentResolver().openFileDescriptor(
+                        profPicPath, "r");
+                int profPicSize = (int) parcelFileDescriptor.getStatSize() / 1024 / 1024;
+                Log.d("ProfileActivity", "IMAGE SIZE REPORTED " + profPicSize);
+                if (profPicSize <= 8) {
+                    uploadProfPic();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Upload Failed: " + profPicSize + "MB > 5 MB Maximum Size", Toast.LENGTH_SHORT).show();
 
-                        }
-                    } catch (FileNotFoundException e) {
-                        Log.w("ProfileActivity", "Unable to retrieve image size");
-                        Toast.makeText(ProfileActivity.this, "Upload Failed: Unable to Determine Image Size", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                       //uploadProfPic();
-
-                    }
                 }
+            } catch (FileNotFoundException e) {
+                Log.w("ProfileActivity", "Unable to retrieve image size");
+                Toast.makeText(ProfileActivity.this, "Upload Failed: Unable to Determine Image Size", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                //uploadProfPic();
+
             }
+        }
+    }
 
 
     //upload new profile image
@@ -555,8 +554,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-
-        //convert memory held byte array to image view for display
+    //convert memory held byte array to image view for display
     public static void byteArrayToImageView(ImageView view, byte[] data) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         view.setImageBitmap(bitmap);

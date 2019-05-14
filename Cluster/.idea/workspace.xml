@@ -94,7 +94,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6658a1e0-e406-41dc-8f97-f63a4270bdd3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -124,23 +124,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="531" selection-start-line="531" selection-end-line="531" />
+            <state relative-caret-position="7208">
+              <caret line="530" lean-forward="true" selection-start-line="530" selection-end-line="530" />
               <folding>
                 <element signature="e#15642#15643#0" expanded="true" />
                 <element signature="e#15668#15669#0" expanded="true" />
                 <element signature="e#16172#20219#0" expanded="true" />
                 <element signature="e#16722#17071#0" expanded="true" />
                 <element signature="e#17070#17071#0" expanded="true" />
-                <element signature="e#17094#18673#0" expanded="true" />
+                <element signature="e#17165#18769#0" expanded="true" />
                 <element signature="e#17636#17953#0" expanded="true" />
                 <element signature="e#17952#17953#0" expanded="true" />
                 <element signature="e#17976#18639#0" expanded="true" />
                 <element signature="e#18638#18639#0" expanded="true" />
-                <element signature="e#18672#18673#0" expanded="true" />
+                <element signature="e#18768#18769#0" expanded="true" />
                 <element signature="e#19003#19280#0" expanded="true" />
                 <element signature="e#19279#19280#0" expanded="true" />
                 <element signature="e#19303#19910#0" expanded="true" />
@@ -150,7 +150,7 @@
                 <element signature="e#22166#22167#0" expanded="true" />
                 <element signature="e#19540#19693#0" expanded="true" />
                 <element signature="e#19692#19693#0" expanded="true" />
-                <element signature="e#28491#28492#0" expanded="true" />
+                <element signature="e#28273#28274#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -166,11 +166,11 @@
           <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+            <state relative-caret-position="442">
+              <caret line="26" column="75" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -178,7 +178,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/FindFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1547">
+            <state relative-caret-position="745">
               <caret line="121" column="85" selection-start-line="120" selection-start-column="24" selection-end-line="121" selection-end-column="85" />
             </state>
           </provider>
@@ -282,7 +282,6 @@
     <option name="KEY_STORE_PATH" value="C:\Users\mason\OneDrive\Documents\1 Johns Hopkins\0 UI &amp; Mobile Apps\Assignments\cluster-keystore.jks" />
     <option name="KEY_ALIAS" value="appcentricity" />
     <option name="REMEMBER_PASSWORDS" value="true" />
-    <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -339,12 +338,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_find.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/EventAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-land/activity_profile.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="width" value="2122" />
     <option name="height" value="2172" />
@@ -850,36 +849,6 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="531" selection-start-line="531" selection-end-line="531" />
-          <folding>
-            <element signature="e#15642#15643#0" expanded="true" />
-            <element signature="e#15668#15669#0" expanded="true" />
-            <element signature="e#16172#20219#0" expanded="true" />
-            <element signature="e#16722#17071#0" expanded="true" />
-            <element signature="e#17070#17071#0" expanded="true" />
-            <element signature="e#17094#18673#0" expanded="true" />
-            <element signature="e#17636#17953#0" expanded="true" />
-            <element signature="e#17952#17953#0" expanded="true" />
-            <element signature="e#17976#18639#0" expanded="true" />
-            <element signature="e#18638#18639#0" expanded="true" />
-            <element signature="e#18672#18673#0" expanded="true" />
-            <element signature="e#19003#19280#0" expanded="true" />
-            <element signature="e#19279#19280#0" expanded="true" />
-            <element signature="e#19303#19910#0" expanded="true" />
-            <element signature="e#19909#19910#0" expanded="true" />
-            <element signature="e#20218#20219#0" expanded="true" />
-            <element signature="e#20653#22167#0" expanded="true" />
-            <element signature="e#22166#22167#0" expanded="true" />
-            <element signature="e#19540#19693#0" expanded="true" />
-            <element signature="e#19692#19693#0" expanded="true" />
-            <element signature="e#28491#28492#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/activity_profile.xml">
       <provider editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -887,13 +856,6 @@
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/FindFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1547">
-          <caret line="121" column="85" selection-start-line="120" selection-start-column="24" selection-end-line="121" selection-end-column="85" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_find.xml">
       <provider editor-type-id="text-editor">
@@ -933,8 +895,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+        <state relative-caret-position="442">
+          <caret line="26" column="75" selection-start-line="26" selection-start-column="75" selection-end-line="26" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/FindFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="745">
+          <caret line="121" column="85" selection-start-line="120" selection-start-column="24" selection-end-line="121" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/appcentricity/cluster/ProfileActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7208">
+          <caret line="530" lean-forward="true" selection-start-line="530" selection-end-line="530" />
+          <folding>
+            <element signature="e#15642#15643#0" expanded="true" />
+            <element signature="e#15668#15669#0" expanded="true" />
+            <element signature="e#16172#20219#0" expanded="true" />
+            <element signature="e#16722#17071#0" expanded="true" />
+            <element signature="e#17070#17071#0" expanded="true" />
+            <element signature="e#17165#18769#0" expanded="true" />
+            <element signature="e#17636#17953#0" expanded="true" />
+            <element signature="e#17952#17953#0" expanded="true" />
+            <element signature="e#17976#18639#0" expanded="true" />
+            <element signature="e#18638#18639#0" expanded="true" />
+            <element signature="e#18768#18769#0" expanded="true" />
+            <element signature="e#19003#19280#0" expanded="true" />
+            <element signature="e#19279#19280#0" expanded="true" />
+            <element signature="e#19303#19910#0" expanded="true" />
+            <element signature="e#19909#19910#0" expanded="true" />
+            <element signature="e#20218#20219#0" expanded="true" />
+            <element signature="e#20653#22167#0" expanded="true" />
+            <element signature="e#22166#22167#0" expanded="true" />
+            <element signature="e#19540#19693#0" expanded="true" />
+            <element signature="e#19692#19693#0" expanded="true" />
+            <element signature="e#28273#28274#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
